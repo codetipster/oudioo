@@ -1,5 +1,8 @@
 import * as React from 'react';
+import { styled, useTheme } from '@mui/material/styles';
+import '../styles/AudioPlayer.css'
 import AppBar from '@mui/material/AppBar';
+import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -12,36 +15,41 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 
 
-const pages = ['Home', 'Playlist'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const TinyText = styled(Typography)({
+  fontSize: '0.75rem',
+  opacity: 0.38,
+  fontWeight: 500,
+  letterSpacing: 0.2,
+});
 
 function AudioPlayer() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  const [isplaying, setIsplaying] = React.useState<boolean | HTMLElement>(true);
+  const [position, setPosition] = React.useState(32);
+  const duration = 200; // seconds
+  const theme = useTheme();
+   //state to toggle playing status
+  const togglePlayPause = () => {
+    setIsplaying(!isplaying)
+  }
+  
+  function formatDuration(value: number) {
+    const minute = Math.floor(value / 60);
+    const secondLeft = value - minute * 60;
+    return `${minute}:${secondLeft < 10 ? `0${secondLeft}` : secondLeft}`;
+  }
+  
 
   return (
-    <AppBar position="static" color='default'>
+    <AppBar position="static" color='default' >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {/* Big screen */}
           <GraphicEqIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> 
-          <Typography
+          {/* <Typography
             variant="h6"
             noWrap
             component="a"
@@ -50,90 +58,107 @@ function AudioPlayer() {
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
+              fontWeight: 200,
+              letterSpacing: '.1rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
             Oudioo
-          </Typography>
+          </Typography> */}
+          <audio src='http://commondatastorage.googleapis.com/codeskulptor-assets/Epoq-Lepidoptera.ogg' preload='metadata' ></audio>
+          <IconButton
+            onClick={togglePlayPause}
+            className='playPause'
+          >
+            {isplaying ? <PlayCircleOutlineIcon/> : <PauseCircleOutlineIcon/>}
+          </IconButton>
+          
+          {/* progress bar */}
+          <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            mt: 4,
+          }}
+        >
+          <TinyText>{formatDuration(position)}</TinyText>
+        </Box>
+          
+          <Slider
+          aria-label="time-indicator"
+          size="small"
+          value={position}
+          min={0}
+          step={1}
+          max={duration}
+          onChange={(_, value) => setPosition(value as number)}
+          sx={{
+            color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
+            height: 4,
+            '& .MuiSlider-thumb': {
+              width: 8,
+              height: 8,
+              transition: '0.3s cubic-bezier(.47,1.64,.41,.8)',
+              '&:before': {
+                boxShadow: '0 2px 12px 0 rgba(0,0,0,0.4)',
+              },
+              '&:hover, &.Mui-focusVisible': {
+                boxShadow: `0px 0px 0px 8px ${
+                  theme.palette.mode === 'dark'
+                    ? 'rgb(255 255 255 / 16%)'
+                    : 'rgb(0 0 0 / 16%)'
+                }`,
+              },
+              '&.Mui-active': {
+                width: 20,
+                height: 20,
+              },
+            },
+            '& .MuiSlider-rail': {
+              opacity: 0.28,
+            },
+          }}
+        />
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            mt: 4,
+            
+          }}
+        >
+          <TinyText>-{formatDuration(duration - position)}</TinyText>
+        </Box>
+        
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          
+
+
+
+          {/* small screen */}
           <GraphicEqIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> 
-          <Typography
+          {/* <Typography
             variant="h5"
             noWrap
             component="a"
             href=""
             sx={{
-              mr: 2,
+              mr: 1,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
               fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
+              fontWeight: 200,
+              letterSpacing: '.1rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
             Oudioo
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+          </Typography> */}
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            
-          </Box>
         </Toolbar>
       </Container>
     </AppBar>
