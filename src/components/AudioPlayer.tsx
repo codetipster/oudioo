@@ -74,18 +74,20 @@ function AudioPlayer() {
             {isplaying ? <PlayCircleOutlineIcon/> : <PauseCircleOutlineIcon/>}
           </IconButton>
           
-          {/* progress bar */}
-          <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            mt: 4,
-          }}
-        >
-          <TinyText>{formatDuration(position)}</TinyText>
-        </Box>
           
+          {/* start time */}
+            <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              mt: 4,
+            }}
+            >
+              <TinyText>{formatDuration(position)}</TinyText>
+            </Box>
+
+          {/* progress bar */}
           <Slider
           aria-label="time-indicator"
           size="small"
@@ -121,6 +123,8 @@ function AudioPlayer() {
             },
           }}
         />
+
+        {/* End time */}
         <Box
           sx={{
             display: 'flex',
