@@ -7,12 +7,24 @@ import '@fontsource/roboto/700.css';
 
 import App from './App';
 
+//import { makeStyles, createStyles } from '@material-ui/core/styles';
+// yarn add @material-ui/core@latest @material-ui/styles@latest
+
+// const useStyles = makeStyles({
+//   appContainer: {
+//     backgroundColor: "rgba(193, 14, 14, 0.4)"
+//   }
+// });
+
+// const classes = useStyles()
+
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+  <React.StrictMode >
     <App />
   </React.StrictMode>
 );
