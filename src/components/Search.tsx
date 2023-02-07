@@ -7,7 +7,8 @@ const useStyles = makeStyles({
     searchWrapper: {
       position: 'relative',
       display: 'flex',
-      minWidth: '100px'
+      minWidth: '100px',
+      margin: '10px'
       
     },
     searchField: {
