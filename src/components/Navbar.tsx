@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Home', 'Playlist',];
+const pages = [{name: 'Home', href: '/'}, {name: 'Playlist', href: '/playlist'}];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar() {
@@ -37,6 +37,7 @@ function Navbar() {
   };
 
   return (
+    
     <AppBar position="static" color='default'>
       <Container maxWidth="xl" >
         <Toolbar disableGutters>
@@ -89,10 +90,10 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} >
+                <MenuItem key={page.name} onClick={handleCloseNavMenu} >
                   <Typography textAlign="center" sx={{
                     color:'#000000'
-                  }}>{page}</Typography>
+                  }}>{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -119,11 +120,12 @@ function Navbar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.name}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: '#000000', display: 'block' }}
+                href={page.href}
               >
-                {page}
+                {page.name}
               </Button>
             ))}
           </Box>
@@ -160,6 +162,7 @@ function Navbar() {
         </Toolbar>
       </Container>
     </AppBar>
+    
   );
 }
 export default Navbar;
