@@ -13,6 +13,7 @@ import Search from './components/Search';
 import AudioList from './components/AudioList';
 import Home from './pages/Home';
 import Playlist from './pages/Playlist';
+import { CssBaseline } from '@material-ui/core';
 //import { makeStyles, createStyles } from '@material-ui/core/styles';
 //yarn add @material-ui/core@latest @material-ui/styles@latest
 
@@ -35,6 +36,7 @@ function App() {
      <Route path="/playlist" element={<Playlist/>} />
     </Routes>
     </BrowserRouter>
+    <CssBaseline/>
     </>
   );
 }

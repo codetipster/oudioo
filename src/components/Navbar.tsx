@@ -38,7 +38,7 @@ function Navbar() {
 
   return (
     
-    <AppBar position="static" color='default'>
+    <AppBar position="static" sx={{backgroundColor:  '#0D1321'}}>
       <Container maxWidth="xl" >
         <Toolbar disableGutters>
           <GraphicEqIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> 
@@ -92,7 +92,7 @@ function Navbar() {
               {pages.map((page) => (
                 <MenuItem key={page.name} onClick={handleCloseNavMenu} >
                   <Typography textAlign="center" sx={{
-                    color:'#000000'
+                    color:'#fffff'
                   }}>{page.name}</Typography>
                 </MenuItem>
               ))}
@@ -122,7 +122,7 @@ function Navbar() {
               <Button
                 key={page.name}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: '#000000', display: 'block' }}
+                sx={{ my: 2, color: '#fffff', display: 'block' }}
                 href={page.href}
               >
                 {page.name}

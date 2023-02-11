@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
+
 // import Table from '@mui/material/Table';
 // import TableBody from '@mui/material/TableBody';
 // import TableCell from '@mui/material/TableCell';
@@ -71,50 +72,7 @@ const AudioList = () => {
     // };
 
   return (
-    // <Paper sx={{ width: '100%' }}>
-    //     <TableContainer className={classes.listContainerText} sx={{ maxHeight: 440 }}>
-    //       <Table stickyHeader aria-label="sticky table">
-
-    //         {/* Header */}
-    //       <TableHead >
-    //         <TableRow >
-    //           <TableCell align="left" colSpan={1} className={classes.listContainerText}>
-    //             Trending Now
-    //           </TableCell>
-    //           <TableCell align="right" colSpan={1} className={classes.allTrackLink}>
-    //             See all
-    //           </TableCell>
-    //         </TableRow>
-
-    //         {/* Table Rows */}
-    //         <TableBody> 
-    //         {rows
-    //           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-    //           .map((row) => {
-    //             return (
-    //               <TableRow hover key={row.id} >
-    //                 {/* Render component for each audio track */}
-    //                 <AudioListItem id={row.id} title={row.title} image={row.image} duration={row.duration} artist={row.Artist}/>
-    //               </TableRow>
-    //             );
-    //           })}
-    //         </TableBody>
-    //       </TableHead>
-    //       </Table>
-    //     </TableContainer>
-    //     {/* Pagination */}
-    //     <TablePagination
-    //     rowsPerPageOptions={[10, 25, 100]}
-    //     component="div"
-    //     count={rows.length}
-    //     rowsPerPage={rowsPerPage}
-    //     page={page}
-    //     onPageChange={handleChangePage}
-    //     onRowsPerPageChange={handleChangeRowsPerPage}
-    //     />
-    //     </Paper>
-
-
+    
 <Paper sx={{ width: '100%' }}>
 <Box sx={{ maxHeight: 440 }}>
   <Box>

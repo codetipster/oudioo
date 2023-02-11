@@ -1,4 +1,7 @@
 import * as React from 'react';
+import {
+    Link
+ } from 'react-router-dom'
 import { Card, Box, Typography, IconButton } from '@mui/material'
 import { makeStyles} from '@material-ui/core/styles';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -39,7 +42,7 @@ const AudioListItem = (props: {id: any, title: String, image: any, duration:Stri
         <img src={props.image} /> 
         <Box sx={{ minWidth: "35%"}}>
             <Typography sx={{fontSize:"18px"}}>
-                {props.title}
+            <Link to={`/tracks/${props.id}`}>{props.title}</Link>
             </Typography>
             <Typography sx={{fontSize:"13px", color:"#898787"}}>
                 {props.artist}
