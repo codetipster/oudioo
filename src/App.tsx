@@ -11,7 +11,7 @@ import Navbar from './components/Navbar';
 import Typography from '@mui/material/Typography';
 import Search from './components/Search';
 import AudioList from './components/AudioList';
-import Home from './pages/Home';
+import LandingPage from './pages/LandingPage';
 import Playlist from './pages/Playlist';
 import { CssBaseline } from '@material-ui/core';
 //import { makeStyles, createStyles } from '@material-ui/core/styles';
@@ -29,10 +29,10 @@ function App() {
   // const classes = useStyles()
   return (
     <>
-     <Navbar/>
+     {/* <Navbar/> */}
     <BrowserRouter>
     <Routes>
-     <Route path="/" element={<Home />} />
+     <Route path="/" element={<LandingPage />} />
      <Route path="/playlist" element={<Playlist/>} />
     </Routes>
     </BrowserRouter>

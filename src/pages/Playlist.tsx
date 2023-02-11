@@ -1,8 +1,13 @@
 import React from 'react'
+import AudioPlayer from '../components/AudioPlayer'
+
 
 const Playlist = () => {
   return (
-    <div>Playlist</div>
+    <div>
+        <h1>Playlist</h1>
+        <AudioPlayer/>
+    </div>
   )
 }
 

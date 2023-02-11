@@ -7,17 +7,17 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
+import WidgetsIcon from '@mui/icons-material/Widgets';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = [{name: 'Home', href: '/'}, {name: 'Playlist', href: '/playlist'}];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+// const pages = [{name: 'Home', href: '/'}, {name: 'Playlist', href: '/playlist'}];
+const menu = ['Signup', 'Login'];
 
-function Navbar() {
+function NavbarNotLoggedIn() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [isLoggedIn, setIsLoggedIn] = React.useState<Boolean | HTMLElement>(false);
@@ -60,7 +60,7 @@ function Navbar() {
             Oudioo
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -69,9 +69,9 @@ function Navbar() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon />
+              {/* <MenuIcon /> */}
             </IconButton>
-            <Menu
+            {/* <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -96,7 +96,7 @@ function Navbar() {
                   }}>{page.name}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
+            </Menu> */}
           </Box>
           <GraphicEqIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> 
           <Typography
@@ -117,7 +117,7 @@ function Navbar() {
           >
             Oudioo
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page.name}
@@ -128,14 +128,15 @@ function Navbar() {
                 {page.name}
               </Button>
             ))}
-          </Box>
+          </Box> */}
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <WidgetsIcon color='primary'/>
               </IconButton>
             </Tooltip>
+            {/* how menu displays onclick while dropping down- Small screen */}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -152,9 +153,9 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              {menu.map((x) => (
+                <MenuItem key={x} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{menu}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -167,4 +168,7 @@ function Navbar() {
   
   
 }
-export default Navbar;
+export default NavbarNotLoggedIn;
+
+
+
