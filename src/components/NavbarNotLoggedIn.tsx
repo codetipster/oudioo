@@ -15,7 +15,7 @@ import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import AdbIcon from '@mui/icons-material/Adb';
 
 // const pages = [{name: 'Home', href: '/'}, {name: 'Playlist', href: '/playlist'}];
-const menu = ['Signup', 'Login'];
+const menu = ['SignUp', 'Login'];
 
 function NavbarNotLoggedIn() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -132,6 +132,7 @@ function NavbarNotLoggedIn() {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
+              
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <WidgetsIcon color='primary'/>
               </IconButton>
@@ -155,7 +156,7 @@ function NavbarNotLoggedIn() {
             >
               {menu.map((x) => (
                 <MenuItem key={x} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{menu}</Typography>
+                  <Typography textAlign="center">{x}</Typography>
                 </MenuItem>
               ))}
             </Menu>

@@ -64,7 +64,8 @@ import MailIcon from '@mui/icons-material/Mail';
 const Banner = () => {
     const classes = useStyles()
     const [state, setState] = React.useState({left: false});
-
+    const [text, setText] = React.useState('')
+    const [id, setId] = React.useState()
     type Anchor = 'left'
       
       const toggleDrawer =
@@ -80,6 +81,15 @@ const Banner = () => {
   
         setState({ ...state, [anchor]: open });
       };
+     //Handle sidebar menu onclick
+      const handleNavClick = (text: any, index: any) => {
+        const clickHandler =() => {
+          console.log('hello', text, index)
+          setText(text)
+          setId(index)
+        }
+        return clickHandler
+      }
 
       
       const list = (anchor: Anchor) => (
@@ -93,7 +103,7 @@ const Banner = () => {
           <List >
             {['Login', 'Signup', 'Contact', 'Documentation'].map((text, index) => (
               <ListItem key={text} sx={{color:"#ffffff"}}>
-                <ListItemButton >
+                <ListItemButton onClick={handleNavClick({text}, {index})}>
                   <ListItemIcon >
                     {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                   </ListItemIcon>
