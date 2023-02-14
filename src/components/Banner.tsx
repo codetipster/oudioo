@@ -1,4 +1,5 @@
 import React from 'react'
+import '../styles/App.css'
 import { Box, IconButton, Toolbar, Typography,  ThemeProvider, createTheme } from '@mui/material';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Image from '../assets/backdrop2.jpeg'; // Import using relative path
@@ -13,6 +14,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import Login from '../pages/Login';
+import { Link } from 'react-router-dom';
 
    const useStyles = makeStyles({
       root: {
@@ -81,6 +84,7 @@ const Banner = () => {
   
         setState({ ...state, [anchor]: open });
       };
+
      //Handle sidebar menu onclick
       const handleNavClick = (text: any, index: any) => {
         const clickHandler =() => {
@@ -101,13 +105,13 @@ const Banner = () => {
           onKeyDown={toggleDrawer(anchor, false)}
         >
           <List >
-            {['Login', 'Signup', 'Contact', 'Documentation'].map((text, index) => (
-              <ListItem key={text} sx={{color:"#ffffff"}}>
-                <ListItemButton onClick={handleNavClick({text}, {index})}>
+            {['Login', 'Signup','Documentation'].map((text, index) => (
+              <ListItem key={text} sx={{color:"#fffff", textDecoration: "none"}}>
+                <ListItemButton onClick={handleNavClick({text}, {index})} >
                   <ListItemIcon >
                     {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                   </ListItemIcon>
-                  <ListItemText secondary={text} />
+                   <Link to={text === 'Login' ? '/login' : (text === 'Signup' ? '/signup' : (text === 'Documentation' ? '/documentation' : '/'))} className='link-text'><ListItemText secondary={text}/></Link> 
                 </ListItemButton >
               </ListItem>
             ))}
@@ -116,30 +120,29 @@ const Banner = () => {
         </Box>
         </ThemeProvider>
       );
-
-
+    
   return (
+
     <div className={classes.root}>
         <Toolbar className={classes.banner}>
+
             <WhiteTextTypography variant="h3">
                 Unleash the Power of Sound:<WhiteTextTypography>Discover Your Next Favorite Tune with Our Audio Streaming App.</WhiteTextTypography>
             </WhiteTextTypography>
+
             <IconButton>
-
-            {(['left'] as const).map((anchor) => (
-            <React.Fragment key={anchor}>
-            <img src={landingImage} className={classes.action} onClick={toggleDrawer(anchor, true)}/>
-            <Drawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-            >
-            {list(anchor)}
-            </Drawer>
-            </React.Fragment>
-            ))}
-
-                {/* <img src={landingImage} className={classes.action}/> */}
+                {(['left'] as const).map((anchor) => (
+                <React.Fragment key={anchor}>
+                  <img src={landingImage} className={classes.action} onClick={toggleDrawer(anchor, true)}/>
+                    <Drawer
+                    anchor={anchor}
+                    open={state[anchor]}
+                    onClose={toggleDrawer(anchor, false)}
+                    >
+                    {list(anchor)}
+                    </Drawer>
+                </React.Fragment>
+                ))}
             </IconButton>
             <WhiteTextTypography variant='h6'>click to start</WhiteTextTypography>
         </Toolbar>
