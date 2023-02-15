@@ -15,6 +15,7 @@ import LandingPage from './pages/LandingPage';
 import Playlist from './pages/Playlist';
 import Login from './pages/Login';
 import { CssBaseline } from '@material-ui/core';
+import Home from './pages/Home';
 //import { makeStyles, createStyles } from '@material-ui/core/styles';
 //yarn add @material-ui/core@latest @material-ui/styles@latest
 
@@ -34,6 +35,7 @@ function App() {
     <BrowserRouter>
     <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/playlist" element={<Playlist />} />
     </Routes>

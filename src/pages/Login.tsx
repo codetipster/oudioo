@@ -8,7 +8,7 @@ import Checkbox from '@mui/joy/Checkbox';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel, { formLabelClasses } from '@mui/joy/FormLabel';
 import IconButton, { IconButtonProps } from '@mui/joy/IconButton';
-import Link from '@mui/joy/Link';
+// import Link from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
@@ -16,7 +16,7 @@ import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import customTheme from '../styles/theme';
 import GoogleIcon from '../styles/GoogleIcon';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
-
+import { Link } from 'react-router-dom';
 interface FormElements extends HTMLFormControlsCollection {
   email: HTMLInputElement;
   password: HTMLInputElement;
@@ -163,6 +163,7 @@ export default function Login() {
                   persistent: formElements.persistent.checked,
                 };
                 alert(JSON.stringify(data, null, 2));
+
               }}
             >
               <FormControl required>
@@ -181,13 +182,16 @@ export default function Login() {
                 }}
               >
                 <Checkbox size="sm" label="Remember for 30 days" name="persistent" />
-                <Link fontSize="sm" href="#replace-with-a-link" fontWeight="lg">
+                <Link to='#'>
                   Forgot password
                 </Link>
               </Box>
+             <Link to='/home'>
               <Button type="submit" fullWidth>
                 Sign in
               </Button>
+              </Link>
+              
             </form>
             <Button
               variant="outlined"
