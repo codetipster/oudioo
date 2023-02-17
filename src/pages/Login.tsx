@@ -1,237 +1,169 @@
-import * as React from 'react';
-import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
-import GlobalStyles from '@mui/joy/GlobalStyles';
-import CssBaseline from '@mui/joy/CssBaseline';
-import Box from '@mui/joy/Box';
-import Button from '@mui/joy/Button';
-import Checkbox from '@mui/joy/Checkbox';
-import FormControl from '@mui/joy/FormControl';
-import FormLabel, { formLabelClasses } from '@mui/joy/FormLabel';
-import IconButton, { IconButtonProps } from '@mui/joy/IconButton';
-// import Link from '@mui/joy/Link';
-import Input from '@mui/joy/Input';
-import Typography from '@mui/joy/Typography';
-import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
-import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
-import customTheme from '../styles/theme';
-import GoogleIcon from '../styles/GoogleIcon';
-import GraphicEqIcon from '@mui/icons-material/GraphicEq';
+import {
+  Avatar,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  CssBaseline,
+  FormControlLabel,
+  Grid,
+  Grow,
+  makeStyles,
+  TextField,
+  Theme,
+  Typography,
+} from "@material-ui/core";
+import landingImage from '../assets/oudioo.png'
+import { GlassCard } from "../components/Glasscard";
+import { GrowList } from "../components/GrowList";
+import Image from '../assets/backdrop2.jpeg';
 import { Link } from 'react-router-dom';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  app: {
+    width: "100%",
+    height: "100vh",
+    backgroundImage: `url(${Image})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundAttachment: "fixed",
+  },
+  container: {
+    paddingTop: 100,
+    padding: theme.spacing(4),
+  },
+  content: {
+    paddingTop: theme.spacing(6),
+    padding: theme.spacing(2),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    width:  '70px',
+    height: '65px',
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  loginText : {
+    color: '#ffffff',
+    textDecoration: 'none'
+  }
+}));
+
 interface FormElements extends HTMLFormControlsCollection {
-  email: HTMLInputElement;
-  password: HTMLInputElement;
-  persistent: HTMLInputElement;
-}
+     email: HTMLInputElement;
+     password: HTMLInputElement;
+     persistent: HTMLInputElement;
+ }
 interface SignInFormElement extends HTMLFormElement {
-  readonly elements: FormElements;
+     readonly elements: FormElements;
 }
 
-function ColorSchemeToggle({ onClick, ...props }: IconButtonProps) {
-  const { mode, setMode } = useColorScheme();
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) {
-    return <IconButton size="sm" variant="plain" color="neutral" disabled />;
-  }
+function Copyright() {
   return (
-    <IconButton
-      id="toggle-mode"
-      size="sm"
-      variant="plain"
-      color="neutral"
-      {...props}
-      onClick={(event) => {
-        if (mode === 'light') {
-          setMode('dark');
-        } else {
-          setMode('light');
-        }
-        onClick?.(event);
-      }}
-    >
-      {mode === 'light' ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
-    </IconButton>
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" to={'#'}>
+        Oudioo
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
   );
 }
 
-/**
- * This template uses [`Inter`](https://fonts.google.com/specimen/Inter?query=inter) font.
- */
-export default function Login() {
+function Login() {
+  const classes = useStyles();
+  
+  
+
   return (
-    <CssVarsProvider
-      defaultMode="dark"
-      disableTransitionOnChange
-      theme={customTheme}
-    >
+    <div className={classes.app}>
       <CssBaseline />
-      <GlobalStyles
-        styles={{
-          ':root': {
-            '--Collapsed-breakpoint': '769px', // form will stretch when viewport is below `769px`
-            '--Cover-width': '40vw', // must be `vw` only
-            '--Form-maxWidth': '700px',
-            '--Transition-duration': '0.4s', // set to `none` to disable transition
-          },
-        }}
-      />
-      <Box
-        sx={(theme) => ({
-          width:
-            'clamp(100vw - var(--Cover-width), (var(--Collapsed-breakpoint) - 100vw) * 999, 100vw)',
-          transition: 'width var(--Transition-duration)',
-          transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
-          position: 'relative',
-          zIndex: 1,
-          display: 'flex',
-          justifyContent: 'flex-end',
-          backdropFilter: 'blur(4px)',
-          backgroundColor: 'rgba(255 255 255 / 0.6)',
-          [theme.getColorSchemeSelector('dark')]: {
-            backgroundColor: 'rgba(19 19 24 / 0.4)',
-          },
-        })}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: '100dvh',
-            width:
-              'clamp(var(--Form-maxWidth), (var(--Collapsed-breakpoint) - 100vw) * 999, 100%)',
-            maxWidth: '100%',
-            px: 2,
-          }}
-        >
-          <Box
-            component="header"
-            sx={{
-              py: 3,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <GraphicEqIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> 
-            <Typography
-              fontWeight="lg"  
-            >
-              Oudioo
-            </Typography>
-            <ColorSchemeToggle />
-          </Box>
-          <Box
-            component="main"
-            sx={{
-              my: 'auto',
-              py: 2,
-              pb: 5,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2,
-              width: 400,
-              maxWidth: '100%',
-              mx: 'auto',
-              borderRadius: 'sm',
-              '& form': {
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2,
-              },
-              [`& .${formLabelClasses.asterisk}`]: {
-                visibility: 'hidden',
-              },
-            }}
-          >
-            <div>
-              <Typography component="h2" fontSize="xl2" fontWeight="lg">
-                Welcome back
-              </Typography>
-              <Typography level="body2" sx={{ my: 1, mb: 3 }}>
-                Let&apos;s get started! Please enter your details.
-              </Typography>
-            </div>
-            <form
-              onSubmit={(event: React.FormEvent<SignInFormElement>) => {
+      <Container maxWidth="sm" className={classes.container}>
+        <form onSubmit={(event: React.FormEvent<SignInFormElement>) => {
                 event.preventDefault();
-                const formElements = event.currentTarget.elements;
-                const data = {
-                  email: formElements.email.value,
-                  password: formElements.password.value,
-                  persistent: formElements.persistent.checked,
+                 const formElements = event.currentTarget.elements;
+                 const data = {
+                   email: formElements.email.value,
+                   password: formElements.password.value,
+                  //  persistent: formElements.persistent.checked,
                 };
                 alert(JSON.stringify(data, null, 2));
-
-              }}
-            >
-              <FormControl required>
-                <FormLabel>Email</FormLabel>
-                <Input placeholder="Enter your email" type="email" name="email" />
-              </FormControl>
-              <FormControl required>
-                <FormLabel>Password</FormLabel>
-                <Input placeholder="•••••••" type="password" name="password" />
-              </FormControl>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <Checkbox size="sm" label="Remember for 30 days" name="persistent" />
-                <Link to='#'>
-                  Forgot password
-                </Link>
-              </Box>
-             <Link to='/home'>
-              <Button type="submit" fullWidth>
-                Sign in
-              </Button>
-              </Link>
+       }}>
+          <Grow in>
+            <GlassCard>
+              <GrowList className={classes.content}>
+                <Avatar className={classes.avatar}>
+                 <img src={landingImage} className={classes.avatar}/>
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  Sign in
+                </Typography>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+                <FormControlLabel
+                  style={{ width: "100%" }}
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
               
-            </form>
-            <Button
-              variant="outlined"
-              color="neutral"
-              fullWidth
-              startDecorator={<GoogleIcon />}
-            >
-              Sign in with Google
-            </Button>
-          </Box>
-          <Box component="footer" sx={{ py: 3 }}>
-            <Typography level="body3" textAlign="center">
-              © Oudioo {new Date().getFullYear()}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-      <Box
-        sx={(theme) => ({
-          height: '100%',
-          position: 'fixed',
-          right: 0,
-          top: 0,
-          bottom: 0,
-          left: 'clamp(0px, (100vw - var(--Collapsed-breakpoint)) * 999, 100vw - var(--Cover-width))',
-          transition:
-            'background-image var(--Transition-duration), left var(--Transition-duration) !important',
-          transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
-          backgroundColor: 'background.level1',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundImage:
-            'url(https://images.unsplash.com/photo-1527181152855-fc03fc7949c8)',
-          [theme.getColorSchemeSelector('dark')]: {
-            backgroundImage:
-              'url(https://images.unsplash.com/photo-1572072393749-3ca9c8ea0831)',
-          },
-        })}
-      />
-    </CssVarsProvider>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  <Link to={'/home'} className={classes.loginText}>Sign In</Link>
+                </Button>
+                
+                <Grid container>
+                  <Grid item xs>
+                    <Link to={'#'} >
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link to={'#'} >
+                      Don't have an account? Sign Up
+                    </Link>
+                  </Grid>
+                </Grid>
+
+                <Box mt={4}>
+                  <Copyright />
+                </Box>
+              </GrowList>
+            </GlassCard>
+          </Grow>
+        </form>
+      </Container>
+    </div>
   );
 }
+
+export default Login;
