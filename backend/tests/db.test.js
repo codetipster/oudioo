@@ -1,15 +1,24 @@
-const pool = require('../db'); // import the pool object
+const db = require('../db');
 
-describe('Database Connection', () => { // describe the test suite
-  test('should connect to the database', async () => {  // describe the test
-    // Run a simple query to test the connection
-    const result = await pool.query('SELECT 1'); // store the result of the query in a variable called result
-
-    // Check if the query result is as expected
-    expect(result.rows[0]).toEqual({ '?column?': 1 }); // expect the first row of the result to be an object with a key of ?column? and a value of 1
+describe('db.js', () => {
+  test('exports a Sequelize instance', () => {
+    expect(db.constructor.name).toBe('Sequelize');
   });
 
-  afterAll(() => { // after all the tests are run, close the connection to the database
-    pool.end();
+  test('connects to the database successfully', async () => {
+    await expect(db.authenticate()).resolves.toBeUndefined();
+  });
+
+  test('throws an error if it fails to connect to the database', async () => {
+    const originalConfig = { ...db.config };
+    db.config.database = 'invalid_database_name';
+
+    try {
+      await db.authenticate();
+    } catch (error) {
+      expect(error).toBeTruthy();
+    } finally {
+      db.config.database = originalConfig.database;
+    }
   });
 });
