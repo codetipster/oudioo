@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const crypto = require('crypto');
+const { sendVerificationEmail } = require('../services/mailer'); //import the sendVerificationEmail function from the mailer service
 
 
 // generate an email verification token for the user to verify the email address.
@@ -28,14 +29,25 @@ exports.registerUser = async (req, res) => {
         // Hash the password using bcrypt
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-    
+
+        // Generate an email verification token for the user to verify the email address.
+        const verificationToken = generateVerificationToken();
+
+        // Set the expiration time for the verification token
+        const verificationTokenExpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour from now
+
         // Save the new user to the database
         const newUser = await User.create({
-          username,
-          email,
-          password_hash: hashedPassword,
-          created_at: new Date(),
+            username,
+            email,
+            password_hash: hashedPassword,
+            created_at: new Date(),
+            verification_token: verificationToken,
+            verification_token_expires: verificationTokenExpires,
         });
+
+        // Send the verification email to the user
+        await sendVerificationEmail(email, verificationToken);
     
         // Respond with a success message
         res.status(201).json({ message: 'User registered successfully.', user: newUser });
