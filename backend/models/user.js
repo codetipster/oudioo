@@ -30,6 +30,15 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: 'listener',
     },
+    verification_token: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    verification_token_expires: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    
   });
 
   return User;
