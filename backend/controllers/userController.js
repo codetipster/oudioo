@@ -57,6 +57,42 @@ exports.registerUser = async (req, res) => {
       }
 };
 
+exports.verifyEmail = async (req, res) => {
+    try {
+      // Get the token from the request URL
+      const { token } = req.query;
+  
+      // Find the user with the matching verification token
+      const user = await User.findOne({ where: { verification_token: token } });
+  
+      // If the user is not found, return an error response
+      if (!user) {
+        return res.status(404).json({ error: 'User not found.' });
+      }
+  
+      // Check if the verification token has expired
+      if (user.verification_token_expires < new Date()) {
+        return res.status(400).json({ error: 'Verification token has expired.' });
+      }
+  
+      // Update the user's status to "verified" and clear the verification token and expiration time
+      await user.update({
+        status: 'verified',
+        verification_token: null,
+        verification_token_expires: null,
+      });
+  
+      // Redirect the user to a success page
+      return res.redirect('/verify-email/success');
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'An error occurred while verifying the email.' });
+    }
+  };
+  
+
 exports.loginUser = async (req, res) => {
   // Your login logic here
 };
+
+

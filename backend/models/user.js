@@ -38,6 +38,11 @@ module.exports = (sequelize) => {
       type: DataTypes.DATE,
       allowNull: true,
     },
+    status: { // new field
+      type: DataTypes.ENUM('unverified', 'verified', 'blocked'), // set values to allow for better control
+      defaultValue: 'unverified', // set default value
+      allowNull: false,
+    },
     
   });
 
