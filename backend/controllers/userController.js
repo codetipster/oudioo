@@ -81,6 +81,10 @@ exports.verifyEmail = async (req, res) => {
         verification_token: null,
         verification_token_expires: null,
       });
+
+
+        // Respond with a success message
+      console.log('User verified successfully.');
   
       // Redirect the user to a success page
       return res.redirect('/verify-email/success');
@@ -88,11 +92,30 @@ exports.verifyEmail = async (req, res) => {
       console.error(error);
       return res.status(500).json({ error: 'An error occurred while verifying the email.' });
     }
-  };
-  
+};
 
+
+// Function to handle user login.
 exports.loginUser = async (req, res) => {
-  // Your login logic here
+    const { email, password } = req.body;
+  
+    // Check if the email is registered
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid email or password.' });
+    }
+  
+    // Check if the password is correct
+    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Invalid email or password.' });
+    }
+  
+    // Generate a JWT token for the user that expires in 1 hour
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  
+    // Respond with the token which the client stores and sends in subsequent requests to authenticate the user when accesing protected routes
+    res.json({ token });
 };
 
 
