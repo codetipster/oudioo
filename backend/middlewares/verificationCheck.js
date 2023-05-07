@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { User } = require('../models');
 
 const verifyAccountMiddleware = async (req, res, next) => {
