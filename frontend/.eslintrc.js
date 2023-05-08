@@ -1,4 +1,8 @@
 module.exports = {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
     "env": {
         "browser": true,
         "es2021": true
