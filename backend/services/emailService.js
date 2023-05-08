@@ -1,19 +1,15 @@
 require('dotenv').config();
 const nodemailer = require('nodemailer');
+const sgTransport = require('nodemailer-sendgrid-transport');
 
-async function sendVerificationEmail2(email, verificationToken) {
-  const transporter = nodemailer.createTransport({
-    service: 'gmail', // or another email service
-    auth: {
-      user: process.env.EMAIL_USER2,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-  });
+const sendGridApiKey = process.env.SENDGRID_API_KEY;
+const transporter = nodemailer.createTransport(sgTransport({ apiKey: sendGridApiKey }));
 
+async function sendVerificationEmail(email, verificationToken) {
   const verificationLink = `http://localhost:3002/users/verify-email?token=${verificationToken}`;
 
   const mailOptions = {
-    from: process.env.EMAIL_USER2,
+    from: process.env.EMAIL_USER,
     to: email,
     subject: 'Email Verification',
     text: `Click the link to verify your email: ${verificationLink}`,
@@ -23,6 +19,5 @@ async function sendVerificationEmail2(email, verificationToken) {
 }
 
 module.exports = {
-    sendVerificationEmail2
-}
-  
+  sendVerificationEmail,
+};

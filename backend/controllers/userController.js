@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const crypto = require('crypto');
-const { sendVerificationEmail } = require('../services/mailer'); //import the sendVerificationEmail function from the mailer service
+const { sendVerificationEmail } = require('../services/emailService'); //import the sendVerificationEmail function from the mailer service
 
 
 // generate an email verification token for the user to verify the email address.
