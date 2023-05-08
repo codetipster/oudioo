@@ -1,15 +1,17 @@
-const express = require('express'); // import express from 'express';
+const express = require('express');
 require('dotenv').config();
-const app = express(); // store the express app in a variable called app
+const userRoutes = require('./routes/userRoutes');
+const swaggerUi = require('swagger-ui-express'); // Import swagger UI for API documentation
+const swaggerSpec = require('./swagger'); // Import swagger specification
 
-app.get('/', (request, response) => { // create a route for the root path. the callback function will be executed when a GET request is made to the root path.
-  response.send('<h1>Hello, worldddd!</h1>'); // send a response when the root path is accessed
-});
+const app = express();
+app.use(express.json()); // Add this line to parse JSON request bodies
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/users', userRoutes);
 
-const PORT = process.env.PORT || 3000; // store the port number in a variable
-const server = app.listen(PORT, () => { // start the server
+const PORT = process.env.PORT || 3000;
+const server = app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
-module.exports = { app, server }; // export the app and server variables
-
+module.exports = { app, server };

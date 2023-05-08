@@ -10,7 +10,7 @@ async function sendVerificationEmail(email, verificationToken) {
     },
   });
 
-  const verificationLink = `http://yourwebsite.com/verify-email?token=${verificationToken}`;
+  const verificationLink = `http://localhost:3002/users/verify-email?token=${verificationToken}`;
 
   const mailOptions = {
     from: process.env.EMAIL_USER,

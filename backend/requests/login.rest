@@ -1,0 +1,8 @@
+post http://localhost:3002/users/register
+Content-Type: application/json
+
+{
+  "username": "chijioke123",
+  "email": "chijiokeuzomaonuoha@gmail.com",
+  "password": "0706856550244"
+}

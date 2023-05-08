@@ -44,6 +44,11 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     
+  }, {
+    tableName: 'users',
+    timestamps: true, // Add this line to enable Sequelize's default timestamps
+    createdAt: 'created_at', // Map 'createdAt' to 'created_at'
+    updatedAt: false, // Disable 'updatedAt' as it is not present in the model
   });
 
   return User;

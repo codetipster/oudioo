@@ -18,12 +18,12 @@ exports.registerUser = async (req, res) => {
         // Check if the email and username are unique
         const emailExists = await User.findOne({ where: { email } });
         if (emailExists) {
-          return res.status(400).json({ error: 'Email is already in use.' });
+          return res.status(400).json({ error: 'Email is already in use.', email });
         }
     
         const usernameExists = await User.findOne({ where: { username } });
         if (usernameExists) {
-          return res.status(400).json({ error: 'Username is already in use.' });
+          return res.status(400).json({ error: 'Username is already in use.', username });
         }
     
         // Hash the password using bcrypt
@@ -53,7 +53,7 @@ exports.registerUser = async (req, res) => {
         res.status(201).json({ message: 'User registered successfully.', user: newUser });
       } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred while registering the user.' });
+        res.status(500).json({ error: 'An error occurred while registering the user.', details: error.message });
       }
 };
 
