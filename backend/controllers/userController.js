@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const crypto = require('crypto');
-const { sendVerificationEmail } = require('../services/emailService'); //import the sendVerificationEmail function from the mailer service
+const { sendVerificationEmail, sendPasswordResetEmail } = require('../services/emailService'); //import the sendVerificationEmail function from the mailer service
 
 
 // generate an email verification token for the user to verify the email address.
@@ -118,4 +118,51 @@ exports.loginUser = async (req, res) => {
     res.json({ token });
 };
 
+// Function to handle user logout
+exports.logoutUser = (req, res) => {
+  // The client should remove the JWT token stored in their application
+  // No server-side action is required since JWT tokens are stateless
+  res.status(200).json({ message: 'User logged out successfully.' });
+};
 
+// Function to get all registered users
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.findAll();
+    res.status(200).json({ users });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while fetching users.', details: error.message });
+  }
+};
+
+
+// Function to handle password reset request
+exports.resetPassword = async (req, res) => {
+  try {
+    const { email } = req.body; // Get the email from the request body (the email address entered by the user)
+    const user = await User.findOne({ where: { email } }); // Find the user with the matching email address in the database
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' }); // If the user is not found, return an error response
+    }
+
+    // Generate a password reset token
+    const passwordResetToken = crypto.randomBytes(32).toString('hex'); // generate a random string
+    const passwordResetTokenExpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour from now
+
+    // Update the user's password reset token and expiration time
+    await user.update({
+      password_reset_token: passwordResetToken,
+      password_reset_token_expires: passwordResetTokenExpires,
+    });
+
+    // Send the password reset email to the user
+    await sendPasswordResetEmail(email, passwordResetToken);
+
+    res.status(200).json({ message: 'Password reset email sent.' }); // Respond with a success message
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while processing the password reset request.', details: error.message });
+  }
+};

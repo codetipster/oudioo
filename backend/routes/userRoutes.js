@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerUser, loginUser, verifyEmail } = require('../controllers/userController');
+const { registerUser, loginUser, verifyEmail, logoutUser, getAllUsers, resetPassword } = require('../controllers/userController');
 
 const router = express.Router();
 
@@ -72,6 +72,22 @@ router.post('/register', registerUser);
  */
 router.post('/login', loginUser);
 
+
+/**
+ * @swagger
+ * /users/logout:
+ *   post:
+ *     summary: Logout a user by clearing the stored JWT token on the client side
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: User logged out successfully
+ *       500:
+ *         description: An error occurred while logging out the user
+ */
+router.post('/logout', logoutUser);
+
+
 // Route to verify a user's email
 /**
  * @swagger
@@ -97,5 +113,47 @@ router.post('/login', loginUser);
  *         description: An error occurred while verifying the email
  */
 router.get('/verify-email', verifyEmail);
+
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Get all registered users
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Returns a list of all registered users
+ *       500:
+ *         description: An error occurred while fetching users
+ */
+router.get('/', getAllUsers);
+
+/**
+ * @swagger
+ * /users/reset-password:
+ *   post:
+ *     summary: Send a password reset email to the user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *     responses:
+ *       200:
+ *         description: Password reset email sent
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: An error occurred while processing the password reset request
+ */
+router.post('/reset-password', resetPassword);
 
 module.exports = router;

@@ -43,6 +43,14 @@ module.exports = (sequelize) => {
       defaultValue: 'unverified', // set default value
       allowNull: false,
     },
+    password_reset_token: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    password_reset_token_expires: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
     
   }, {
     tableName: 'users',

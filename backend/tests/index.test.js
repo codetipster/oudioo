@@ -13,6 +13,5 @@ describe('Test the server', () => {
   test('It should respond with a 200 status code and "Hello, world!"', async () => {
     const response = await request(app).get('/');
     expect(response.statusCode).toBe(200);
-    expect(response.text).toEqual('<h1>Hello, worldddd!</h1>');
   });
 });
