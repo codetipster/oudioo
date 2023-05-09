@@ -1,5 +1,11 @@
 const express = require('express');
-const { registerUser, loginUser, verifyEmail, logoutUser, getAllUsers, resetPassword } = require('../controllers/userController');
+const { registerUser,
+    loginUser, 
+    verifyEmail, 
+    logoutUser, 
+    getAllUsers, 
+    resetPassword,
+    confirmResetPassword  } = require('../controllers/userController');
 
 const router = express.Router();
 
@@ -155,5 +161,40 @@ router.get('/', getAllUsers);
  *         description: An error occurred while processing the password reset request
  */
 router.post('/reset-password', resetPassword);
+
+// Route to confirm reset password
+/**
+ * @swagger
+ * /users/confirm-reset-password:
+ *   post:
+ *     summary: Confirm and reset the user's password
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - token
+ *               - newPassword
+ *             properties:
+ *               token:
+ *                 type: string
+ *               newPassword:
+ *                 type: string
+ *                 format: password
+ *     responses:
+ *       200:
+ *         description: Password has been successfully updated
+ *       400:
+ *         description: Password reset token has expired
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: An error occurred while resetting the password
+ */
+router.post('/confirm-reset-password', confirmResetPassword);
+
 
 module.exports = router;

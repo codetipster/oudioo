@@ -166,3 +166,40 @@ exports.resetPassword = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while processing the password reset request.', details: error.message });
   }
 };
+
+exports.confirmResetPassword = async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    // Find the user with the matching password reset token
+    const user = await User.findOne({ where: { password_reset_token: token } });
+
+    // If the user is not found, return an error response
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    // Check if the password reset token has expired
+    if (user.password_reset_token_expires < new Date()) {
+      return res.status(400).json({ error: 'Password reset token has expired.' });
+    }
+
+    // Hash the new password using bcrypt
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update the user's password and clear the password reset token and expiration time
+    await user.update({
+      password_hash: hashedPassword,
+      password_reset_token: null,
+      password_reset_token_expires: null,
+    });
+
+    // Respond with a success message
+    res.status(200).json({ message: 'Password has been successfully updated.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while resetting the password.', details: error.message });
+  }
+};
+
