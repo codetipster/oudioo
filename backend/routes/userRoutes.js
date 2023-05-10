@@ -5,7 +5,9 @@ const { registerUser,
     logoutUser, 
     getAllUsers, 
     resetPassword,
-    confirmResetPassword  } = require('../controllers/userController');
+    confirmResetPassword,
+    getUserById  
+   } = require('../controllers/userController');
 
 const router = express.Router();
 
@@ -195,6 +197,35 @@ router.post('/reset-password', resetPassword);
  *         description: An error occurred while resetting the password
  */
 router.post('/confirm-reset-password', confirmResetPassword);
+
+// Route to get a specific user by id
+/**
+ * @swagger
+ * /users/{id}:
+ *   get:
+ *     summary: Retrieve a specific user by id
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Numeric ID of the user to retrieve
+ *     responses:
+ *       200:
+ *         description: A user object
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: An error occurred while retrieving the user
+ */
+router.get('/:id', getUserById);
+
 
 
 module.exports = router;

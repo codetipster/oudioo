@@ -13,7 +13,57 @@ const options = {
         url: 'http://localhost:3002',
       },
     ],
-    
+    components: {
+      schemas: {
+        User: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'integer',
+              readOnly: true,
+            },
+            username: {
+              type: 'string',
+            },
+            email: {
+              type: 'string',
+              format: 'email',
+            },
+            password_hash: {
+              type: 'string',
+            },
+            created_at: {
+              type: 'string',
+              format: 'date-time',
+            },
+            is_content_creator: {
+              type: 'boolean',
+            },
+            role: {
+              type: 'string',
+            },
+            verification_token: {
+              type: 'string',
+            },
+            verification_token_expires: {
+              type: 'string',
+              format: 'date-time',
+            },
+            status: {
+              type: 'string',
+              enum: ['unverified', 'verified', 'blocked'],
+            },
+            password_reset_token: {
+              type: 'string',
+            },
+            password_reset_token_expires: {
+              type: 'string',
+              format: 'date-time',
+            },
+          },
+        },
+      },
+    },
   },
   apis: ['./routes/*.js'], // point to your route files
 };

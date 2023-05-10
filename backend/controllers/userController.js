@@ -203,3 +203,22 @@ exports.confirmResetPassword = async (req, res) => {
   }
 };
 
+exports.getUserById = async (req, res) => {
+  try {
+    const { id } = req.params; // Get the user ID from the request parameters
+
+    // Find the user with the specified id
+    const user = await User.findByPk(id);
+
+    // If the user is not found, return an error response
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    // Respond with the found user
+    res.status(200).json({ user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while retrieving the user.', details: error.message });
+  }
+};
