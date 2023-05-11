@@ -62,6 +62,34 @@ const options = {
             },
           },
         },
+        Podcast: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'integer',
+              readOnly: true,
+            },
+            title: {
+              type: 'string',
+            },
+            description: {
+              type: 'string',
+            },
+            cover_image_url: {
+              type: 'string',
+            },
+            user_id: {
+              type: 'integer',
+            },
+          },
+        },
+      },
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
       },
     },
   },

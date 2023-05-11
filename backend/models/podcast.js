@@ -26,6 +26,9 @@ module.exports = (sequelize) => {
         key: 'id',
       },
     },
+  }, {
+    tableName: 'podcasts', // Note: it is important to define the table name explicitly here
+    timestamps: true, // Add this line to enable Sequelize's default timestamps without having to define createdAt and updatedAt in the model
   });
 
   Podcast.associate = (models) => {
@@ -34,6 +37,6 @@ module.exports = (sequelize) => {
       as: 'user',
     });
   };
-
+  
   return Podcast;
 };
