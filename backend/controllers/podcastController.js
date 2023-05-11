@@ -49,7 +49,23 @@ async function createPodcast(req, res) {
     }
   }
 
+
+async function getPodcastById(req, res){
+    try {
+        const podcast = await Podcast.findByPk(req.params.id);
+        if (!podcast) {
+            return res.status(404).json({ error: 'Podcast not found'});
+        }
+        res.status(200).json(podcast);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'An error occurred while fetching the podcast', error: error.message})
+    }
+}
+  
+
 module.exports = {
   getAllPodcasts,
   createPodcast,
+  getPodcastById,
 };

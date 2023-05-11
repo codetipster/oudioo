@@ -2,6 +2,7 @@
 const express = require('express');
 const { getAllPodcasts,
     createPodcast,
+    getPodcastById
 } = require('../controllers/podcastController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
@@ -77,6 +78,34 @@ router.get('/', getAllPodcasts);
  *         description: An error occurred while creating the podcast
  */
 router.post('/', authMiddleware, createPodcast);
+
+// Get a podcast by ID
+/**
+ * @swagger
+ * /podcasts/{id}:
+ *   get:
+ *     summary: Retrieve a specific podcast
+ *     tags: [Podcasts]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The id of the podcast to retrieve
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: A specific podcast
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Podcast'
+ *       404:
+ *         description: Podcast not found
+ *       500:
+ *         description: An error occurred while fetching the podcast
+ */
+router.get('/:id', getPodcastById);
 
 // Export the router
 module.exports = router;

@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+const { Podcast } = require('../models');
 const crypto = require('crypto');
 const { sendVerificationEmail, sendPasswordResetEmail } = require('../services/emailService'); //import the sendVerificationEmail function from the mailer service
 
@@ -222,3 +223,22 @@ exports.getUserById = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while retrieving the user.', details: error.message });
   }
 };
+
+// Function to get all podcasts by a specific user
+exports.getPodcastsByUser = async (req, res) => {
+  try {
+    
+    const userId = parseInt(req.params.userId, 10);
+
+    const podcasts = await Podcast.findAll({ where: { user_id: userId } });
+
+    if (!podcasts || podcasts.length === 0) {
+      return res.status(404).json({ message: 'No podcasts found for this user' });
+    }
+
+    res.status(200).json(podcasts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred while fetching the podcasts' });
+  }
+}

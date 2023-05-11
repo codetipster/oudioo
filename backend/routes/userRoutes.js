@@ -6,7 +6,8 @@ const { registerUser,
     getAllUsers, 
     resetPassword,
     confirmResetPassword,
-    getUserById  
+    getUserById,
+    getPodcastsByUser  
    } = require('../controllers/userController');
 
 const router = express.Router();
@@ -225,6 +226,36 @@ router.post('/confirm-reset-password', confirmResetPassword);
  *         description: An error occurred while retrieving the user
  */
 router.get('/:id', getUserById);
+
+// Route to get all podcasts by a specific user
+/**
+ * @swagger
+ * /users/{userId}/podcasts:
+ *   get:
+ *     summary: Retrieve all podcasts by a specific user
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         description: The id of the user to retrieve podcasts for
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: A list of podcasts by a specific user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Podcast'
+ *       404:
+ *         description: No podcasts found for this user
+ *       500:
+ *         description: An error occurred while fetching the podcasts
+ */
+router.get('/:userId/podcasts', getPodcastsByUser);
 
 
 
