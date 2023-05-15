@@ -62,6 +62,7 @@ const options = {
             },
           },
         },
+
         Podcast: {
           type: 'object',
           properties: {
@@ -80,6 +81,42 @@ const options = {
             },
             user_id: {
               type: 'integer',
+            },
+          },
+        },
+
+        Episode: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'integer',
+            },
+            title: {
+              type: 'string',
+            },
+            description: {
+              type: 'string',
+            },
+            audio_url: {
+              type: 'string',
+            },
+            duration: {
+              type: 'integer',
+            },
+            release_date: {
+              type: 'string',
+              format: 'date-time',
+            },
+            podcast_id: {
+              type: 'integer',
+            },
+            created_at: {
+              type: 'string',
+              format: 'date-time',
+            },
+            updated_at: {
+              type: 'string',
+              format: 'date-time',
             },
           },
         },

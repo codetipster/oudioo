@@ -31,10 +31,15 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Podcast', // Note: the model name should match the name defined in the Podcast model (e.g., 'Podcast' or 'Podcasts')
+        model: 'Podcast', // singular and lowercase
         key: 'id',
       },
     },
+  }, {
+    timestamps: true,
+    tableName: 'episodes',
+    updatedAt: 'updated_at', // use snake case for the actual database column name
+    createdAt: 'created_at', // use snake case for the actual database column name
   });
 
   Episode.associate = (models) => {
