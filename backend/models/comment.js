@@ -31,7 +31,14 @@ module.exports = (sequelize) => {
         key: 'id',
       },
     },
-  });
+  },{
+    tableName: 'comments',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: false, // this assumes you don't want to track when the comment was last updated
+  }
+  
+  );
 
   Comment.associate = (models) => {
     Comment.belongsTo(models.User, {

@@ -9,6 +9,7 @@ const { registerUser,
     getUserById,
     getPodcastsByUser  
    } = require('../controllers/userController');
+const authMiddleware = require('../middlewares/authMiddleware'); 
 
 const router = express.Router();
 
@@ -141,6 +142,8 @@ router.get('/', getAllUsers);
  * @swagger
  * /users/reset-password:
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     summary: Send a password reset email to the user
  *     tags: [Users]
  *     requestBody:
@@ -163,7 +166,7 @@ router.get('/', getAllUsers);
  *       500:
  *         description: An error occurred while processing the password reset request
  */
-router.post('/reset-password', resetPassword);
+router.post('/reset-password', authMiddleware, resetPassword);
 
 // Route to confirm reset password
 /**
