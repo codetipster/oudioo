@@ -2,9 +2,9 @@
 const express = require('express');
 const { getAllPodcasts,
     createPodcast,
-    getPodcastById
+    getPodcastById,
 } = require('../controllers/podcastController');
-const { getEpisodesByPodcast, createEpisode } = require('../controllers/episodesController');
+const { getEpisodesByPodcast, createEpisode, getEpisodeComments, createEpisodeComment } = require('../controllers/episodesController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 
@@ -209,6 +209,107 @@ router.get('/:podcastId/episodes', getEpisodesByPodcast);
 
 router.post('/:podcastId/episodes', authMiddleware, createEpisode);
 
+// Route to get all comments for a particular episode
+// Existing routes...
 
-// Export the router
+/**
+ * @swagger
+ * /podcasts/{podcastId}/episodes/{episodeId}/comments:
+ *  get:
+ *    tags: [Comments]
+ *    description: Get comments of a specific episode under a specific podcast
+ *    parameters:
+ *      - in: path
+ *        name: podcastId
+ *        required: true
+ *        schema:
+ *          type: integer
+ *          minimum: 1
+ *        description: Numeric ID of the podcast
+ *      - in: path
+ *        name: episodeId
+ *        required: true
+ *        schema:
+ *          type: integer
+ *          minimum: 1
+ *        description: Numeric ID of the episode to get comments for
+ *    responses:
+ *      200:
+ *        description: A list of comments
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                type: object
+ *                properties:
+ *                  id:
+ *                    type: integer
+ *                  content:
+ *                    type: string
+ *                  user_id:
+ *                    type: integer
+ *                  episode_id:
+ *                    type: integer
+ *      404:
+ *        description: Podcast or episode not found
+ *      500:
+ *        description: Internal server error
+ */
+router.get('/:podcastId/episodes/:episodeId/comments', getEpisodeComments);
+
+
+/**
+ * @swagger
+ * /podcasts/{podcastId}/episodes/{episodeId}/comments:
+ *   post:
+ *     summary: Create a new comment for a specific episode
+ *     tags: [Comments]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: podcastId
+ *         required: true
+ *         description: Numeric ID of the podcast
+ *         schema:
+ *           type: integer
+ *       - in: path
+ *         name: episodeId
+ *         required: true
+ *         description: Numeric ID of the episode to create a comment for
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               content:
+ *                 type: string
+ *             example:
+ *               content: "Great episode!"
+ *     responses:
+ *       201:
+ *         description: The comment was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 comment:
+ *                   $ref: '#/components/schemas/Comment'
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: Podcast or episode not found
+ *       500:
+ *         description: An error occurred while creating the comment
+ */
+router.post('/:podcastId/episodes/:episodeId/comments', authMiddleware, createEpisodeComment);
+
 module.exports = router;

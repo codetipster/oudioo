@@ -1,4 +1,4 @@
-const { Episode, Podcast } = require('../models');  // Make sure to adjust the path according to your project structure
+const { Episode, Podcast, Comment } = require('../models');  // Make sure to adjust the path according to your project structure
 
 exports.getEpisodesByPodcast = async (req, res) => {
   try {
@@ -50,3 +50,71 @@ exports.createEpisode = async (req, res) => {
         return res.status(500).json({ message: 'An error occurred while creating the episode' });
       }
     };  
+
+// Function to get all comments for a particular episode
+exports.getEpisodeComments = async (req, res) => {
+  try {
+    const episodeId = parseInt(req.params.episodeId, 10);
+    const episode = await Episode.findByPk(episodeId, {
+      include: [
+        {
+          model: Comment,
+          as: 'comments', // Assuming 'comments' is the association alias you have set in your models
+        },
+      ],
+    });
+
+    if (!episode) {
+      return res.status(404).json({ message: 'Episode not found' });
+    }
+
+    res.status(200).json(episode.comments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred while fetching the comments' });
+  }
+};
+
+
+exports.createEpisodeComment = async (req, res) => {
+  const { content } = req.body;
+  const { episodeId } = req.params;
+  const { userId } = req.user;
+
+  // Check if content is not empty
+  if (!content || content.trim() === '') {
+    return res.status(400).json({
+      success: false,
+      message: 'Content is required',
+    });
+  }
+
+  try {
+    // Check if the episode exists
+    const episode = await Episode.findByPk(episodeId);
+    if (!episode) {
+      return res.status(404).json({
+        success: false,
+        message: 'Episode not found',
+      });
+    }
+
+    const newComment = await Comment.create({
+      content,
+      episode_id: episodeId,
+      user_id: userId,
+      created_at: new Date(), 
+    });
+
+    res.status(201).json({ 
+      success: true,
+      comment: newComment,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+      error,
+    });
+  }
+};

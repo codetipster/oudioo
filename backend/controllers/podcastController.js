@@ -1,4 +1,4 @@
-const { Podcast } = require('../models');
+const { Podcast, Episode } = require('../models');
 
 // Function to get all podcasts with pagination and filtering options
 async function getAllPodcasts(req, res) {
@@ -62,10 +62,33 @@ async function getPodcastById(req, res){
         res.status(500).json({ message: 'An error occurred while fetching the podcast', error: error.message})
     }
 }
+
+
+async function getPodcastEpisodes(req, res){
+  try {
+      const podcast = await Podcast.findByPk(req.params.id, {
+        include: [
+          {
+            model: Episode,
+            as: 'episodes',
+          },
+        ],
+      });
+      if (!podcast) {
+          return res.status(404).json({ error: 'Podcast not found'});
+      }
+      res.status(200).json(podcast.episodes);
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'An error occurred while fetching the podcast episodes', error: error.message})
+  }
+}
+
   
 
 module.exports = {
   getAllPodcasts,
   createPodcast,
   getPodcastById,
+  getPodcastEpisodes,
 };
