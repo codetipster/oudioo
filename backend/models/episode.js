@@ -47,7 +47,13 @@ module.exports = (sequelize) => {
       foreignKey: 'podcast_id',
       as: 'podcast',
     });
+
+    Episode.hasMany(models.Comment, {
+      foreignKey: 'episode_id',
+      as: 'comments'
+    });
   };
+
 
   return Episode;
 };
