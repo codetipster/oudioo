@@ -24,5 +24,13 @@
     "src",
     "src/index.tsx",
     "src/App.test.ts"  
-  ]
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "./"
+  },
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "error"
+  }
 }
