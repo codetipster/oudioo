@@ -82,7 +82,7 @@ exports.createEpisodeComment = async (req, res) => {
   const { id: userId } = req.user;
   //const { token } = req.query;
   // In your createEpisodeComment function
-  console.log('USER_ID FROM EPISODE CONTROLLER',userId);
+  //console.log('USER_ID FROM EPISODE CONTROLLER',userId);
 
   // Check if content is not empty
   if (!content || content.trim() === '') {
