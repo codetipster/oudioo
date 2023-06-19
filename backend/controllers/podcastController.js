@@ -1,4 +1,4 @@
-const { Podcast, Episode } = require('../models');
+const { Podcast, Episode, User } = require('../models');
 
 // Function to get all podcasts with pagination and filtering options
 async function getAllPodcasts(req, res) {
@@ -10,15 +10,26 @@ async function getAllPodcasts(req, res) {
       limit,
       offset: (page - 1) * limit,
       order: [['createdAt', 'DESC']], // Order by 'createdAt' in descending order (newest first)
+      include: [{ model: User, as: 'user', attributes: ['username'] }] // Using the 'user' alias
     };
 
     const { count, rows: podcasts } = await Podcast.findAndCountAll(options);
+    
+    
+    // Transform podcasts to include the user's username
+    const transformedPodcasts = podcasts.map((podcast) => {
+      const podcastPlain = podcast.get({ plain: true });
+      return {
+        ...podcastPlain,
+        user_name: podcastPlain.user.username,
+      };
+    });
 
     res.status(200).json({
       totalPodcasts: count,
       totalPages: Math.ceil(count / limit),
       currentPage: page,
-      podcasts,
+      podcasts: transformedPodcasts,
     });
   } catch (error) {
     console.error(error);

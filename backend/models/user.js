@@ -38,9 +38,9 @@ module.exports = (sequelize) => {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    status: { // new field
-      type: DataTypes.ENUM('unverified', 'verified', 'blocked'), // set values to allow for better control
-      defaultValue: 'unverified', // set default value
+    status: {
+      type: DataTypes.ENUM('unverified', 'verified', 'blocked'),
+      defaultValue: 'unverified',
       allowNull: false,
     },
     password_reset_token: {
@@ -51,13 +51,19 @@ module.exports = (sequelize) => {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    
   }, {
     tableName: 'users',
     timestamps: true, // Add this line to enable Sequelize's default timestamps
     createdAt: 'created_at', // Map 'createdAt' to 'created_at'
     updatedAt: false, // Disable 'updatedAt' as it is not present in the model
   });
+
+  User.associate = (models) => {
+    User.hasMany(models.Podcast, {
+      foreignKey: 'user_id',
+      as: 'podcasts',
+    });
+  };
 
   return User;
 };
