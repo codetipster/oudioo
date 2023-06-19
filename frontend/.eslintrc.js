@@ -1,25 +1,27 @@
 module.exports = {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "project": "./tsconfig.json"
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+      project: './tsconfig.json',  // <-- here
+      tsconfigRootDir: __dirname,
+      ecmaVersion: 2020,
+      sourceType: 'module',
+      ecmaFeatures: {
+        jsx: true,
+      },
     },
-    "env": {
-        "browser": true,
-        "es2021": true
+    plugins: ['@typescript-eslint', 'react', 'prettier'],
+    extends: [
+      'plugin:@typescript-eslint/recommended',
+      'plugin:react/recommended',
+      'plugin:prettier/recommended',
+    ],
+    rules: {
+      // place to specify ESLint rules
     },
-    "extends": [
-        "plugin:react/recommended",
-        "standard-with-typescript"
-    ],
-    "overrides": [
-    ],
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module"
+    settings: {
+      react: {
+        version: 'detect',
+      },
     },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-    }
-}
+  }
+  
