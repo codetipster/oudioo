@@ -88,7 +88,7 @@ exports.verifyEmail = async (req, res) => {
       console.log('User verified successfully.');
   
       // Redirect the user to a success page
-      return res.redirect('/verify-email/success');
+      return res.redirect('http://localhost:3000/login'); // redirect to the login page when user clicks on the link in the email
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: 'An error occurred while verifying the email.' });

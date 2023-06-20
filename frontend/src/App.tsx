@@ -5,6 +5,8 @@ import AuthContext from './context/AuthContext';
 import Home from './pages/Home/Home';
 import Login from './pages/Auth/Login'; // Assuming you have a Login page component
 import PodcastList from './pages/Podcasts/PodcastList';
+import Register from './pages/Auth/Register'; // Assuming you have a Register page component
+import SuccessPage from './pages/Auth/SuccessPage';
 
 
 function App() {
@@ -27,9 +29,12 @@ function App() {
             <nav>
               <Link to="/">Home</Link>
               <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
             </nav>
             <Routes>
+            <Route path="/success" element={<SuccessPage />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               <Route path="/" element={<Home />} />
               <Route path="/podcastList" element={<PodcastList />} />
             </Routes>
