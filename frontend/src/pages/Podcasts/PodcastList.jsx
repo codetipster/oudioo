@@ -23,6 +23,7 @@ const podcastList = () => {
   return (
     <div>
       {podcasts.map((podcast) => (
+        //console.log('podcastList', podcast),
         <PodcastCard key={podcast.id} {...podcast} />
       ))}
     </div>
