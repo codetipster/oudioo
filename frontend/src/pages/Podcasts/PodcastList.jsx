@@ -17,7 +17,7 @@ const podcastList = () => {
     .then(data => setPodcasts(data.podcasts))
     .catch(error => console.error('Error:', error));
   }, []);
-  console.log(podcasts)
+  
   
   
   return (

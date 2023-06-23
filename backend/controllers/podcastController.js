@@ -1,4 +1,7 @@
 const { Podcast, Episode, User } = require('../models');
+// In any file where you need to use S3
+
+
 
 // Function to get all podcasts with pagination and filtering options
 async function getAllPodcasts(req, res) {
@@ -41,11 +44,13 @@ async function getAllPodcasts(req, res) {
 // Function to add a new podcast by an authenticated user.
 async function createPodcast(req, res) {
     try {
-      const { title, description, cover_image_url } = req.body;
+      const { title, description } = req.body;
   
       // Get the user ID from the request. This assumes you have some kind of authentication in place.
       const userId = req.user.id;
-  
+      // Get the  file url from the request- this is the url of the image uploaded to S3
+      const cover_image_url = req.file.location;
+      // Create the podcast
       const newPodcast = await Podcast.create({
         title,
         description,

@@ -1,0 +1,19 @@
+.App {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; // this ensures the App component takes up the full viewport height
+    padding: 2em; // this adds white space around the content, increase or decrease as needed
+    box-sizing: border-box; // ensures padding is included in height calculation
+    background-color: rgb(64, 61, 61);
+    color: aliceblue;
+  }
+  
+  .link { // styles for Link components
+    color: #fff; // changes link color to white
+    text-decoration: none; // removes underline from links
+    font-weight: bold; // makes link text bold
+    &:hover { // styles for when the link is hovered
+      color: #ddd; // changes link color to light grey on hover
+    }
+  }

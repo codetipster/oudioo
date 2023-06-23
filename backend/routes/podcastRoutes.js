@@ -1,5 +1,6 @@
 // Import your required dependencies
 const express = require('express');
+const { upload } =  require ('../services/s3Service'); // Import the upload function from s3Service.js
 const { getAllPodcasts,
     createPodcast,
     getPodcastById,
@@ -78,7 +79,7 @@ router.get('/', getAllPodcasts);
  *       500:
  *         description: An error occurred while creating the podcast
  */
-router.post('/', authMiddleware, createPodcast);
+router.post('/', authMiddleware, upload.single('image'), createPodcast);
 
 // Get a podcast by ID
 /**

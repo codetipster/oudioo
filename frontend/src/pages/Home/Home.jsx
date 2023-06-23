@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div>
     <h3>Homepage of Odioo</h3>
-      <Navbar />
+     <p>A detailed about of what the Oudioo platfrom is would readily appear here for users to read about.</p>
     </div>
   )
 }
