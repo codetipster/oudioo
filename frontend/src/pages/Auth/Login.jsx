@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
+import '../../styles/Login.scss'
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -24,8 +25,10 @@ function LoginForm() {
         throw new Error('Network response was not ok');
       } else {
         const data = await response.json();
+        //console.log('data-user', data.user.id);
         if (data.token) {
           localStorage.setItem('token', data.token);
+          localStorage.setItem('user', data.user.id);
           setAuthToken(data.token);
           // Navigate to the podcast page
           navigate('/podcastList');
@@ -39,7 +42,7 @@ function LoginForm() {
   
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="login-form">
       <label>
         Email:
         <input 

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import PodcastCard  from './PodcastCard'; 
+import '../../styles/Podcastlist.scss'
 
 
 
@@ -21,10 +22,12 @@ const podcastList = () => {
   
   
   return (
-    <div>
+    <div className='card-container'>
       {podcasts.map((podcast) => (
         //console.log('podcastList', podcast),
-        <PodcastCard key={podcast.id} {...podcast} />
+        //<div>
+          <PodcastCard key={podcast.id} {...podcast} />
+        //</div>
       ))}
     </div>
   )

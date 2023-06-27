@@ -116,7 +116,7 @@ exports.loginUser = async (req, res) => {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
   
     // Respond with the token which the client stores and sends in subsequent requests to authenticate the user when accesing protected routes
-    res.json({ token });
+    res.json({ token, user: { id: user.id, username: user.username, email: user.email }});
 };
 
 // Function to handle user logout

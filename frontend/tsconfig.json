@@ -24,6 +24,6 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx"
-, "src/pages/Auth/Login..jsx"  ]
+, "src/pages/Auth/Login..jsx", "src/App.tsx"  ]
 }
 

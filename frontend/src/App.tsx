@@ -3,13 +3,14 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import './App.css';
 import AuthContext from './context/AuthContext';
 import Home from './pages/Home/Home';
-import Login from './pages/Auth/Login'; // Assuming you have a Login page component
+import Login from './pages/Auth/Login';
 import PodcastList from './pages/Podcasts/PodcastList';
-import Register from './pages/Auth/Register'; // Assuming you have a Register page component
+import Register from './pages/Auth/Register';
 import SuccessPage from './pages/Auth/SuccessPage';
+import PodcastDetail from './pages/Podcasts/PodcastDetail';
 import CreatePodcast from './pages/Podcasts/createPodcast';
+import Navbar from './components/Navbar'; // Assuming you have a Navbar component
 import './styles/App.scss'
-
 
 function App() {
 
@@ -22,36 +23,26 @@ function App() {
     }
   }, []);
 
+  
+  
+
   return (
     <AuthContext.Provider value={{ authToken, setAuthToken }}>
       <Router>
         <div className="App">
-          <header className="App-header">
-            <h2>Odioo</h2>
-            {/* These links should be in a Navbar component */}
-            <nav>
-              <Link className="link" to="/">Home</Link>
-              {authToken ? (
-                <>
-                  <Link className="link" to="/logout">Logout</Link>
-                  <Link className="link" to="/create-podcast">Create Podcast</Link>
-                </>
-              ) : (
-                <>
-                  <Link className="link" to="/login">Login</Link>
-                  <Link className="link" to="/register">Register</Link>
-                </>
-              )}
-            </nav>
+          <Navbar/>
+          <div className="content">
             <Routes>
-            <Route path="/success" element={<SuccessPage />} />
+              <Route path="/success" element={<SuccessPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/" element={<Home />} />
+              <Route path="/logout" element={<Home authToken={authToken}/>} />
+              <Route path="/" element={<Home authToken={authToken}/>} />
               <Route path="/podcastList" element={<PodcastList />} />
-              <Route path="//create-podcast" element={<CreatePodcast />} />
+              <Route path="/podcasts/:id" element={<PodcastDetail />} />
+              <Route path="/create-podcast" element={<CreatePodcast />} />
             </Routes>
-          </header>
+          </div>
         </div>
       </Router>
     </AuthContext.Provider>

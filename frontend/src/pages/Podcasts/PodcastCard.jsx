@@ -1,19 +1,20 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import '../../styles/PodcastCard.scss'
 
-const Podcast = ({ title, description, cover_image_url
-  , user_name }) => {
-  console.log('podcastCard',cover_image_url, user_name, title, description)
+const PodcastCard = ({ id, title, description, cover_image_url, user_name }) => {
   return (
-    <div>
-      <h2>{title}</h2>
-      <p>{description}</p>
-      <h4>By: {user_name}</h4>
-      <div >
-      <img src={cover_image_url} alt={title} className='img-style'/>
+    <Link to={`/podcasts/${id}`} className='podcast-card-link'>
+      <div className='podcast-card'>
+        <h2>{title}</h2>
+        <div>
+          <img src={cover_image_url} alt={title} className='img-style'/>
+        </div>
+        <p>{description}</p>
+        <h4>By: {user_name}</h4>
       </div>
-    </div>
+    </Link>
   )
 }
 
-export default Podcast
+export default PodcastCard

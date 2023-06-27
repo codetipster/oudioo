@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import  '../../styles/createPodcast.scss'
 
 const CreatePodcast = () => {
   const [title, setTitle] = useState("");
@@ -62,10 +63,11 @@ const CreatePodcast = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
+            className='description'
           />
         </label>
         <label>
-          Image:
+          Cover Image:
           <input
             type="file"
             name="image"

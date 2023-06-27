@@ -88,18 +88,33 @@ async function createPodcast(req, res) {
   }
 
 
-async function getPodcastById(req, res){
+  async function getPodcastById(req, res){
     try {
-        const podcast = await Podcast.findByPk(req.params.id);
-        if (!podcast) {
-            return res.status(404).json({ error: 'Podcast not found'});
-        }
-        res.status(200).json(podcast);
+      const podcast = await Podcast.findByPk(req.params.id);
+  
+      if (!podcast) {
+        return res.status(404).json({ error: 'Podcast not found'});
+      }
+      
+      if (!podcast.cover_image_url.startsWith('https://oudioo.s3.eu-central-1.amazonaws.com/')) {
+        console.warn(`Skipping presigned URL generation for podcast ${podcast.id} as cover_image_url is not an S3 URL.`);
+      } else {
+        const url = new URL(podcast.cover_image_url);
+        const pathName = url.pathname;
+        const fileKey = pathName.startsWith('/') ? pathName.slice(1) : pathName;
+        console.log('Parsed file key', fileKey);
+        
+        const presignedUrl = await getPresignedUrl(fileKey);
+        podcast.cover_image_url = presignedUrl;
+      }
+  
+      res.status(200).json(podcast);
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: 'An error occurred while fetching the podcast', error: error.message})
+      console.log(error);
+      res.status(500).json({ message: 'An error occurred while fetching the podcast', error: error.message})
     }
-}
+  }
+  
 
 
 async function getPodcastEpisodes(req, res){
