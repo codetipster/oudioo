@@ -67,3 +67,15 @@
       }
     }
   }
+
+  .audio-player-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    transition: transform 0.3s ease-out;
+    transform: translateY(100%); // This will initially hide the player off screen.
+
+    &.active {
+        transform: translateY(0); // This will slide up the player when it's active.
+    }
+}

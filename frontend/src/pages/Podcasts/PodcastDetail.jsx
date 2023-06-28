@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import { FaPlayCircle } from 'react-icons/fa'; // import the play icon
+import { FaPauseCircle } from 'react-icons/fa'; // import the pause icon
 import '../../styles/detail.scss'
 import { useParams, useNavigate } from 'react-router-dom';
+import Player from '../../components/Oudioo';
 
 const PodcastDetail = () => {
   let { id } = useParams();
   const [podcastDetail, setPodcastDetail] = useState(null);
   const [episodes, setEpisodes] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   //const [creator, setCreator] = useState();
   const currentUserId = Number(localStorage.getItem('user'));
   const navigate = useNavigate();
+  
 
 
   useEffect(() => {
@@ -43,6 +47,15 @@ if (!podcastDetail) {
 const handlePlay = (episodeId) => {
     console.log(`Play button clicked for episode with id: ${episodeId}`);
     // Add your logic here to handle the play button click
+    setIsPlaying(true);
+    
+};
+
+const handlePause = (episodeId) => {
+  console.log(`Play button clicked for episode with id: ${episodeId}`);
+  // Add your logic here to handle the play button click
+  setIsPlaying(false);
+  
 };
 
 const handleEpisodeCreation = () => {
@@ -65,7 +78,7 @@ const handleEpisodeCreation = () => {
                 <h4>{episode.title}</h4>
                 <p>{episode.description}</p>
                </div>
-                <FaPlayCircle className="play-icon" onClick={() => handlePlay(episode.id)}/>
+                {isPlaying ? (<FaPauseCircle className="play-icon" onClick={() => handlePause(episode.id)}/>) : <FaPlayCircle className="play-icon" onClick={() => handlePlay(episode.id)}/>}
             </div>
           </div>
         ))
@@ -79,6 +92,9 @@ const handleEpisodeCreation = () => {
           <button>Delete podcast</button>
         </div>
       )}
+      </div>
+      <div className={`audio-player-container ${isPlaying ? 'active' : ''}`}>
+          {isPlaying && <Player audioURL="url_of_the_audio_to_play"  />}
       </div>
     </div>
   );

@@ -10,6 +10,7 @@
     "@types/react-dom": "^18.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-h5-audio-player": "^3.8.6",
     "react-hook-form": "^7.45.0",
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.13.0",
