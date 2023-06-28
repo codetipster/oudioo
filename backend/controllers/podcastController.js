@@ -1,6 +1,6 @@
 const { Podcast, Episode, User } = require('../models');
 const { getPresignedUrl } = require('../services/s3Service');
-const { URL } = require('url');
+const { URL } = require('url'); // Built-in Node.js package
 // In any file where you need to use S3
 
 
@@ -24,7 +24,7 @@ async function getAllPodcasts(req, res) {
   
     // Generate pre-signed URLs and transform podcasts to include the user's username
     const transformedPodcasts = await Promise.all(podcasts.map(async (podcast) => {
-      console.log('Original cover_image_url', podcast.cover_image_url);
+      //console.log('Original cover_image_url', podcast.cover_image_url);
       
       // Check if cover_image_url is an S3 URL
       if (!podcast.cover_image_url.startsWith('https://oudioo.s3.eu-central-1.amazonaws.com/')) {
@@ -35,7 +35,7 @@ async function getAllPodcasts(req, res) {
       const url = new URL(podcast.cover_image_url);
       const pathName = url.pathname;
       const fileKey = pathName.startsWith('/') ? pathName.slice(1) : pathName;
-      console.log('Parsed file key', fileKey);
+      //console.log('Parsed file key', fileKey);
       
       const presignedUrl = await getPresignedUrl(fileKey);  // Using podcast.cover_image_url as the key for your S3 object
       const podcastPlain = podcast.get({ plain: true });

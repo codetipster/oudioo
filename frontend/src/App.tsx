@@ -9,6 +9,7 @@ import Register from './pages/Auth/Register';
 import SuccessPage from './pages/Auth/SuccessPage';
 import PodcastDetail from './pages/Podcasts/PodcastDetail';
 import CreatePodcast from './pages/Podcasts/createPodcast';
+import NewEpisode from './pages/Episodes/NewEpisode';
 import Navbar from './components/Navbar'; // Assuming you have a Navbar component
 import './styles/App.scss'
 
@@ -40,6 +41,7 @@ function App() {
               <Route path="/" element={<Home authToken={authToken}/>} />
               <Route path="/podcastList" element={<PodcastList />} />
               <Route path="/podcasts/:id" element={<PodcastDetail />} />
+              <Route path="/podcasts/:id/episodes/new" element={ <NewEpisode />} />
               <Route path="/create-podcast" element={<CreatePodcast />} />
             </Routes>
           </div>

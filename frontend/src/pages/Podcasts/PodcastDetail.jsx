@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaPlayCircle } from 'react-icons/fa'; // import the play icon
 import '../../styles/detail.scss'
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const PodcastDetail = () => {
   let { id } = useParams();
@@ -10,6 +10,7 @@ const PodcastDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   //const [creator, setCreator] = useState();
   const currentUserId = Number(localStorage.getItem('user'));
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -43,6 +44,10 @@ const handlePlay = (episodeId) => {
     console.log(`Play button clicked for episode with id: ${episodeId}`);
     // Add your logic here to handle the play button click
 };
+
+const handleEpisodeCreation = () => {
+    navigate(`/podcasts/${id}/episodes/new`);
+}
   
 
   return (
@@ -70,7 +75,7 @@ const handlePlay = (episodeId) => {
         
       { podcastDetail.user_id === currentUserId && (
         <div className="button-container">
-          <button>Create new episode</button>
+          <button onClick={handleEpisodeCreation}>Create new episode</button>
           <button>Delete podcast</button>
         </div>
       )}

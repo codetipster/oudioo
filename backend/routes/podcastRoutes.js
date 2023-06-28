@@ -208,7 +208,7 @@ router.get('/:podcastId/episodes', getEpisodesByPodcast);
  *         description: An error occurred while creating the episode
  */
 
-router.post('/:podcastId/episodes', authMiddleware, createEpisode);
+router.post('/:podcastId/episodes', authMiddleware, upload.single('audio'), createEpisode);
 
 // Route to get all comments for a particular episode
 // Existing routes...
