@@ -1,7 +1,7 @@
 // Player component
-import React, { useState, useEffect } from 'react';
-import AudioPlayer from 'react-h5-audio-player';
-import 'react-h5-audio-player/lib/styles.css';
+import React, { useState, useEffect } from "react";
+import AudioPlayer from "react-h5-audio-player";
+import "react-h5-audio-player/lib/styles.css";
 
 const Player = () => {
   const [playerKey, setPlayerKey] = useState(Date.now());
@@ -27,9 +27,9 @@ const Player = () => {
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         customAdditionalControls={[]}
-    />
+      />
     </div>
   );
-}
+};
 
 export default Player;

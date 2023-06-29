@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import  '../../styles/createPodcast.scss'
+import React, { useState } from "react";
+import "../../styles/createPodcast.scss";
 
 const CreatePodcast = () => {
   const [title, setTitle] = useState("");
@@ -10,39 +10,37 @@ const CreatePodcast = () => {
     if (e.target.files) {
       setImageFile(e.target.files[0]);
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
+    formData.append("title", title);
+    formData.append("description", description);
     if (imageFile) {
-      formData.append('image', imageFile);
+      formData.append("image", imageFile);
     }
-  
+
     // Retrieve the token from localStorage
-    const token = localStorage.getItem('token');
-  
+    const token = localStorage.getItem("token");
+
     // Making a POST request to the server
-    const response = await fetch('http://localhost:3002/podcasts', {
-      method: 'POST',
+    const response = await fetch("http://localhost:3002/podcasts", {
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${token}`, // Add the 'Authorization' header here
+        Authorization: `Bearer ${token}`, // Add the 'Authorization' header here
       },
       body: formData,
     });
-  
+
     if (response.ok) {
       const jsonResponse = await response.json();
       console.log(jsonResponse);
     } else {
-      console.log('Error: ', response.statusText);
+      console.log("Error: ", response.statusText);
     }
   };
-  
-  
 
   return (
     <div className="create-podcast">
@@ -63,7 +61,7 @@ const CreatePodcast = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
-            className='description'
+            className="description"
           />
         </label>
         <label>
@@ -79,7 +77,6 @@ const CreatePodcast = () => {
       </form>
     </div>
   );
-}
+};
 
 export default CreatePodcast;
-

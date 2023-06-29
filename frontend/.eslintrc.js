@@ -9,14 +9,12 @@ module.exports = {
         jsx: true,
       },
     },
-    plugins: ['@typescript-eslint', 'react', 'prettier'],
+    plugins: ['prettier'],
     extends: [
-      'plugin:@typescript-eslint/recommended',
-      'plugin:react/recommended',
       'plugin:prettier/recommended',
     ],
     rules: {
-      // place to specify ESLint rules
+      "prettier/prettier": "error",
     },
     settings: {
       react: {

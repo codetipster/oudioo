@@ -1,6 +1,6 @@
-const { Episode, Podcast, Comment } = require('../models');  // Make sure to adjust the path according to your project structure
-const { getPresignedUrl } = require('../services/s3Service');
 const { URL } = require('url'); // Built-in Node.js package for parsing URLs
+const { Episode, Podcast, Comment } = require('../models'); // Make sure to adjust the path according to your project structure
+const { getPresignedUrl } = require('../services/s3Service');
 
 exports.getEpisodesByPodcast = async (req, res) => {
   try {
@@ -18,14 +18,15 @@ exports.getEpisodesByPodcast = async (req, res) => {
   }
 };
 
-
 exports.createEpisode = async (req, res) => {
   try {
-    const { title, description, duration, release_date } = req.body; // Get the title, description, duration and release_date from the request body
-    const audio_url = req.file.location; // This assumes the 'location' field on the file object is the URL to access the uploaded file. This may vary based on your S3 configuration.
-    const podcastId = req.params.podcastId; // Get the podcast ID from the request parameters
-    const userId = req.user.id; // Get the user ID from the request. This assumes you have some kind of authentication in place.
-    console.log('server', duration)
+    const {
+      title, description, duration, release_date,
+    } = req.body; // Get the title, description, duration and release_date from the request body
+    const audio_url = req.file.location;
+    const { podcastId } = req.params;
+    const userId = req.user.id; // Get the user ID from the request object
+    console.log('server', duration);
     // Check if the podcast exists and belongs to the user
     const podcast = await Podcast.findOne({
       where: { id: podcastId, user_id: userId },
@@ -54,7 +55,6 @@ exports.createEpisode = async (req, res) => {
   }
 };
 
-
 // Function to get all comments for a particular episode
 exports.getEpisodeComments = async (req, res) => {
   try {
@@ -79,14 +79,13 @@ exports.getEpisodeComments = async (req, res) => {
   }
 };
 
-
 exports.createEpisodeComment = async (req, res) => {
   const { content } = req.body;
   const { episodeId } = req.params;
   const { id: userId } = req.user;
-  //const { token } = req.query;
+  // const { token } = req.query;
   // In your createEpisodeComment function
-  //console.log('USER_ID FROM EPISODE CONTROLLER',userId);
+  // console.log('USER_ID FROM EPISODE CONTROLLER',userId);
 
   // Check if content is not empty
   if (!content || content.trim() === '') {
@@ -110,10 +109,10 @@ exports.createEpisodeComment = async (req, res) => {
       content,
       episode_id: episodeId,
       user_id: userId,
-      created_at: new Date(), 
+      created_at: new Date(),
     });
 
-    res.status(201).json({ 
+    res.status(201).json({
       success: true,
       comment: newComment,
     });
