@@ -17,7 +17,7 @@ const PodcastDetail = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`http://localhost:3002/podcasts/${id}`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/podcasts/${id}`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Received data from /podcasts:", data);
@@ -25,7 +25,7 @@ const PodcastDetail = () => {
       })
       .catch((error) => console.error("Error:", error));
 
-    fetch(`http://localhost:3002/podcasts/${id}/episodes`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/podcasts/${id}/episodes`)
       .then((response) => response.json())
       .then((data) => {
         setEpisodes(data);

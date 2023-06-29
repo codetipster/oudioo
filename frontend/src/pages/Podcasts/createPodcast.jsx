@@ -26,13 +26,16 @@ const CreatePodcast = () => {
     const token = localStorage.getItem("token");
 
     // Making a POST request to the server
-    const response = await fetch("http://localhost:3002/podcasts", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`, // Add the 'Authorization' header here
-      },
-      body: formData,
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/podcasts`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`, // Add the 'Authorization' header here
+        },
+        body: formData,
+      }
+    );
 
     if (response.ok) {
       const jsonResponse = await response.json();

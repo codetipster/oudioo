@@ -23,7 +23,7 @@ const NewEpisode = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3002/podcasts/${id}/episodes`,
+        `${process.env.REACT_APP_BACKEND_URL}/podcasts/${id}/episodes`,
         {
           method: "POST",
           headers: {

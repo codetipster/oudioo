@@ -5,7 +5,7 @@ import "../../styles/Podcastlist.scss";
 const podcastList = () => {
   const [podcasts, setPodcasts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3002/podcasts", {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/podcasts`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
