@@ -50,10 +50,9 @@ module.exports = (sequelize) => {
 
     Episode.hasMany(models.Comment, {
       foreignKey: 'episode_id',
-      as: 'comments'
+      as: 'comments',
     });
   };
-
 
   return Episode;
 };

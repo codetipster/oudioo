@@ -1,6 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken'); //  import the jsonwebtoken package
-const { User } = require('../models');  // import the User model
+const { User } = require('../models'); // import the User model
 
 const authMiddleware = async (req, res, next) => { // create a middleware function
   try {
@@ -9,18 +9,18 @@ const authMiddleware = async (req, res, next) => { // create a middleware functi
 
     // Verify the token and extract the user ID
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    //console.log('decoded token', decoded)
+    // console.log('decoded token', decoded)
     const userId = decoded.id;
 
     // Find the user in the database by ID
     const user = await User.findByPk(userId);
-    //console.log('user', user)
+    // console.log('user', user)
 
     // Attach the user object to the request object
     req.user = user;
-    
+
     // In your authMiddleware
-    //console.log('USER FROM MIDDLEWARE', req.user);
+    // console.log('USER FROM MIDDLEWARE', req.user);
 
     // Call the next middleware function or route handler
     next();

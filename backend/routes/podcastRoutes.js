@@ -1,14 +1,15 @@
 // Import your required dependencies
 const express = require('express');
-const { upload } =  require ('../services/s3Service'); // Import the upload function from s3Service.js
-const { getAllPodcasts,
-    createPodcast,
-    getPodcastById,
+const { upload } = require('../services/s3Service'); // Import the upload function from s3Service.js
+const {
+  getAllPodcasts,
+  createPodcast,
+  getPodcastById,
 } = require('../controllers/podcastController');
-const { getEpisodesByPodcast, createEpisode, getEpisodeComments, createEpisodeComment } = require('../controllers/episodesController');
+const {
+  getEpisodesByPodcast, createEpisode, getEpisodeComments, createEpisodeComment,
+} = require('../controllers/episodesController');
 const authMiddleware = require('../middlewares/authMiddleware');
-
-
 
 const router = express.Router();
 // Get all podcasts
@@ -258,7 +259,6 @@ router.post('/:podcastId/episodes', authMiddleware, upload.single('audio'), crea
  *        description: Internal server error
  */
 router.get('/:podcastId/episodes/:episodeId/comments', getEpisodeComments);
-
 
 /**
  * @swagger

@@ -28,6 +28,7 @@ module.exports = (sequelize) => {
     },
   }, {
     tableName: 'podcasts', // Note: it is important to define the table name explicitly here
+    // eslint-disable-next-line max-len
     timestamps: true, // Add this line to enable Sequelize's default timestamps without having to define createdAt and updatedAt in the model
   });
 
@@ -42,6 +43,6 @@ module.exports = (sequelize) => {
       as: 'episodes',
     });
   };
-  
+
   return Podcast;
 };

@@ -1,15 +1,16 @@
 const express = require('express');
-const { registerUser,
-    loginUser, 
-    verifyEmail, 
-    logoutUser, 
-    getAllUsers, 
-    resetPassword,
-    confirmResetPassword,
-    getUserById,
-    getPodcastsByUser  
-   } = require('../controllers/userController');
-const authMiddleware = require('../middlewares/authMiddleware'); 
+const {
+  registerUser,
+  loginUser,
+  verifyEmail,
+  logoutUser,
+  getAllUsers,
+  resetPassword,
+  confirmResetPassword,
+  getUserById,
+  getPodcastsByUser,
+} = require('../controllers/userController');
+const authMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
@@ -82,7 +83,6 @@ router.post('/register', registerUser);
  */
 router.post('/login', loginUser);
 
-
 /**
  * @swagger
  * /users/logout:
@@ -96,7 +96,6 @@ router.post('/login', loginUser);
  *         description: An error occurred while logging out the user
  */
 router.post('/logout', logoutUser);
-
 
 // Route to verify a user's email
 /**
@@ -259,7 +258,5 @@ router.get('/:id', getUserById);
  *         description: An error occurred while fetching the podcasts
  */
 router.get('/:userId/podcasts', getPodcastsByUser);
-
-
 
 module.exports = router;
