@@ -12,6 +12,14 @@ module.exports = {
     // ...
   },
   production: { // store the production environment configuration in an object
-    // ...
+    use_env_variable: 'DATABASE_URL',
+    dialect: 'postgres',
+    protocol: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    }, // ...
   },
 };

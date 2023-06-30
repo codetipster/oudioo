@@ -1,19 +1,27 @@
-const { Sequelize } = require('sequelize'); // import the Sequelize class from the sequelize package
-const config = require('./config/config'); // import the config object
+const { Sequelize } = require('sequelize');
+const config = require('./config/config');
 
-const sequelize = new Sequelize( // create a new Sequelize instance and store it in a variable called sequelize
-  config.development.database,
-  config.development.username,
-  config.development.password,
-  {
-    host: config.development.host,
-    dialect: config.development.dialect,
-  }
-);
+let sequelize;
 
-(async () => { // create an async function and invoke it immediately
+// If the application is running in production, use the DATABASE_URL
+if (process.env.NODE_ENV === 'production') {
+  sequelize = new Sequelize(process.env.DATABASE_URL, config.production);
+} else {
+  // If not, use the local environment variables
+  sequelize = new Sequelize(
+    config.development.database,
+    config.development.username,
+    config.development.password,
+    {
+      host: config.development.host,
+      dialect: config.development.dialect,
+    },
+  );
+}
+
+(async () => {
   try {
-    await sequelize.authenticate();  // authenticate the connection to the database
+    await sequelize.authenticate();
     console.log('Connection to the database has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
@@ -21,4 +29,3 @@ const sequelize = new Sequelize( // create a new Sequelize instance and store it
 })();
 
 module.exports = sequelize;
-
