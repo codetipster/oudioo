@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "start": "react-scripts start",
+    "start": "serve build -s -n -L -p 3000",
     "build": "react-scripts build",
     "test": "jest",
     "lint": "eslint",
