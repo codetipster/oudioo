@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import "../../styles/Login.scss";
@@ -41,6 +42,9 @@ function LoginForm() {
       console.error(
         "There has been a problem with your fetch operation:",
         error
+      );
+      toast.error(
+        "There was an issue with your login attempt. Please try again."
       );
     }
   };
