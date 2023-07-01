@@ -1,13 +1,13 @@
 const express = require('express');
 require('dotenv').config();
+const swaggerUi = require('swagger-ui-express'); // Import swagger UI for API documentation
+const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
 const podcastRoutes = require('./routes/podcastRoutes');
-const swaggerUi = require('swagger-ui-express'); // Import swagger UI for API documentation
 const swaggerSpec = require('./swagger'); // Import swagger specification
-const cors = require('cors');
 
 const app = express();
-app.use(cors())
+app.use(cors());
 app.use(express.json()); // Add this line to parse JSON request bodies
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/users', userRoutes);

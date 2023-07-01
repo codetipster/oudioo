@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import "../../styles/Register.scss";
 
 const Register = () => {
@@ -19,9 +18,8 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmitt = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/users/register`,
@@ -34,13 +32,35 @@ const Register = () => {
         }
       );
 
-      if (response.status === 201) {
+      const responseData = await response.json();
+      if (response.ok) {
         toast.success("Registration Successful!");
-        // Redirect to login page
         navigate("/success");
+      } else if (response.status === 400) {
+        // Handle 400 error
+        setUserData({
+          username: "",
+          email: "",
+          password: "",
+        });
+        toast.error(
+          responseData.error || "An error occurred during registration."
+        );
+      } else {
+        // Handle any other non-ok status
+        setUserData({
+          username: "",
+          email: "",
+          password: "",
+        });
+        toast.error("Unexpected error during registration.");
       }
     } catch (error) {
-      console.error(error);
+      setUserData({
+        username: "",
+        email: "",
+        password: "",
+      });
       toast.error("An error occurred during registration.");
     }
   };
@@ -50,7 +70,7 @@ const Register = () => {
     <div className="registration-container">
       <div className="register">
         <h2>Register</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitt}>
           <label>
             Username
             <input
@@ -80,7 +100,6 @@ const Register = () => {
           </label>
           <button type="submit">Register</button>
         </form>
-        <ToastContainer />
       </div>
     </div>
   );

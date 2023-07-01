@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import "./App.css";
 import AuthContext from "./context/AuthContext";
@@ -11,6 +13,7 @@ import PodcastDetail from "./pages/Podcasts/PodcastDetail";
 import CreatePodcast from "./pages/Podcasts/createPodcast";
 import NewEpisode from "./pages/Episodes/NewEpisode";
 import Navbar from "./components/Navbar"; // Assuming you have a Navbar component
+
 import "./styles/App.scss";
 
 function App() {
@@ -25,6 +28,18 @@ function App() {
 
   return (
     <AuthContext.Provider value={{ authToken, setAuthToken }}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        style={{ fontSize: "1.5rem" }} // Custom style here
+      />
       <Router>
         <div className="App">
           <Navbar />
