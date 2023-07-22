@@ -3,7 +3,7 @@ import { FaPlayCircle } from "react-icons/fa"; // import the play icon
 import { FaPauseCircle } from "react-icons/fa"; // import the pause icon
 import "../../styles/detail.scss";
 import { useParams, useNavigate } from "react-router-dom";
-import Player from "../../components/Oudioo";
+import Oudioo from "../../components/Oudioo";
 
 const PodcastDetail = () => {
   let { id } = useParams();
@@ -12,6 +12,7 @@ const PodcastDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   //const [creator, setCreator] = useState();
+  const [currentEpisodeUrl, setCurrentEpisodeUrl] = useState(null);
   const currentUserId = Number(localStorage.getItem("user"));
   const navigate = useNavigate();
 
@@ -29,6 +30,7 @@ const PodcastDetail = () => {
       .then((response) => response.json())
       .then((data) => {
         setEpisodes(data);
+        console.log("Received data from /episodes:", data);
         setIsLoading(false);
       })
       .catch((error) => console.error("Error:", error));
@@ -41,15 +43,16 @@ const PodcastDetail = () => {
     return null;
   }
 
-  const handlePlay = (episodeId) => {
-    console.log(`Play button clicked for episode with id: ${episodeId}`);
-    // Add your logic here to handle the play button click
+  const handlePlay = (episodeId, episodeUrl) => {
+    console.log(
+      `Play button clicked for episode with url: ${episodeUrl}, and id: ${episodeId}`
+    );
     setIsPlaying(true);
+    setCurrentEpisodeUrl(episodeUrl);
   };
 
   const handlePause = (episodeId) => {
     console.log(`Play button clicked for episode with id: ${episodeId}`);
-    // Add your logic here to handle the play button click
     setIsPlaying(false);
   };
 
@@ -57,9 +60,14 @@ const PodcastDetail = () => {
     navigate(`/podcasts/${id}/episodes/new`);
   };
 
+  const src = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+
   return (
     <div className="podcast-detail-container">
       <h1>{podcastDetail.title}</h1>
+      <div id="billboardWrapper">
+        <div id="billboard" />
+      </div>
       <img src={podcastDetail.cover_image_url} alt={podcastDetail.title} />
       <p>{podcastDetail.description}</p>
       <h3>Episodes:</h3>
@@ -75,12 +83,12 @@ const PodcastDetail = () => {
                 {isPlaying ? (
                   <FaPauseCircle
                     className="play-icon"
-                    onClick={() => handlePause(episode.id)}
+                    onClick={() => handlePause(episode.id, episode.audio_url)}
                   />
                 ) : (
                   <FaPlayCircle
                     className="play-icon"
-                    onClick={() => handlePlay(episode.id)}
+                    onClick={() => handlePlay(episode.id, episode.audio_url)}
                   />
                 )}
               </div>
@@ -97,9 +105,12 @@ const PodcastDetail = () => {
           </div>
         )}
       </div>
-      <div className={`audio-player-container ${isPlaying ? "active" : ""}`}>
-        {isPlaying && <Player audioURL="url_of_the_audio_to_play" />}
-      </div>
+
+      {currentEpisodeUrl && (
+        <div className={`audio-player-container ${isPlaying ? "active" : ""}`}>
+          <Oudioo src={currentEpisodeUrl} />
+        </div>
+      )}
     </div>
   );
 };

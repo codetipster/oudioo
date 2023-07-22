@@ -13,6 +13,8 @@ import PodcastDetail from "./pages/Podcasts/PodcastDetail";
 import CreatePodcast from "./pages/Podcasts/createPodcast";
 import NewEpisode from "./pages/Episodes/NewEpisode";
 import Navbar from "./components/Navbar"; // Assuming you have a Navbar component
+import Blog from "./pages/Blog";
+//import AdComponent from "./ads/AdComponent";
 
 import "./styles/App.scss";
 
@@ -43,6 +45,7 @@ function App() {
       <Router>
         <div className="App">
           <Navbar />
+
           <div className="content">
             <Routes>
               <Route path="/success" element={<SuccessPage />} />
@@ -51,6 +54,7 @@ function App() {
               <Route path="/logout" element={<Home authToken={authToken} />} />
               <Route path="/" element={<Home authToken={authToken} />} />
               <Route path="/podcastList" element={<PodcastList />} />
+              <Route path="/blog" element={<Blog />} />
               <Route path="/podcasts/:id" element={<PodcastDetail />} />
               <Route
                 path="/podcasts/:id/episodes/new"

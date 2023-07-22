@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const { URL } = require('url'); // Built-in Node.js package for parsing URLs
 const { Episode, Podcast, Comment } = require('../models'); // Make sure to adjust the path according to your project structure
 const { getPresignedUrl } = require('../services/s3Service');
@@ -5,11 +6,23 @@ const { getPresignedUrl } = require('../services/s3Service');
 exports.getEpisodesByPodcast = async (req, res) => {
   try {
     const podcastId = parseInt(req.params.podcastId, 10);
-    const episodes = await Episode.findAll({ where: { podcast_id: podcastId } });
+    let episodes = await Episode.findAll({ where: { podcast_id: podcastId } });
 
     if (!episodes || episodes.length === 0) {
       return res.status(404).json({ message: 'No episodes found for this podcast' });
     }
+
+    episodes = await Promise.all(episodes.map(async (episode) => {
+      if (episode.audio_url.startsWith('https://oudioo.s3.eu-central-1.amazonaws.com/')) {
+        const url = new URL(episode.audio_url);
+        const pathName = url.pathname;
+        const fileKey = pathName.startsWith('/') ? pathName.slice(1) : pathName;
+
+        const presignedUrl = await getPresignedUrl(fileKey);
+        episode.audio_url = presignedUrl;
+      }
+      return episode;
+    }));
 
     res.status(200).json(episodes);
   } catch (error) {

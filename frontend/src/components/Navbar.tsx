@@ -25,6 +25,11 @@ const Navbar = () => {
     navigate("/create-podcast");
   };
 
+  const handleBlog = () => {
+    setDropdownVisible(false);
+    navigate("/blog");
+  };
+
   return (
     //<div className='navbar'>
     <div className="navbar">
@@ -42,6 +47,9 @@ const Navbar = () => {
                 </Link>
                 <Link to="/logout" onClick={handleLogout}>
                   Logout
+                </Link>
+                <Link to="/blog" onClick={handleBlog}>
+                  Tech Blog
                 </Link>
               </div>
             )}

@@ -14,6 +14,40 @@ const Home: React.FC<HomeProps> = ({ authToken }) => {
         here for users to read about.
       </p>
 
+      {/* Ad slots */}
+      <div
+        id="superbanner"
+        //style={{ width: "100%", height: "250px", backgroundColor: "#eee" }}
+      ></div>
+      <div
+        id="sky"
+        //style={{ width: "160px", height: "600px", backgroundColor: "#eee" }}
+      ></div>
+      <div
+        id="billboard"
+        //style={{ width: "970px", height: "250px", backgroundColor: "#eee" }}
+      ></div>
+      <div
+        id="mrec"
+        //style={{ width: "300px", height: "250px", backgroundColor: "#eee" }}
+      ></div>
+      <div
+        id="mrec_btf"
+        //style={{ width: "300px", height: "250px", backgroundColor: "#eee" }}
+      ></div>
+      <div
+        id="mrec_btf_2"
+        //style={{ width: "300px", height: "250px", backgroundColor: "#eee" }}
+      ></div>
+      <div
+        id="mrec_btf_3"
+        //style={{ width: "300px", height: "250px", backgroundColor: "#eee" }}
+      ></div>
+      <div
+        id="inpage"
+        //style={{ width: "300px", height: "600px", backgroundColor: "#eee" }}
+      ></div>
+
       {/* Show auth token if available */}
       {authToken && <p>Current auth token: {authToken}</p>}
     </div>

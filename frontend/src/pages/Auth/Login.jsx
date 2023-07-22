@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+//import AdComponent from "../../ads/AdComponent";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";

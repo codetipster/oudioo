@@ -9,35 +9,111 @@
       name="description"
       content="Web site created using create-react-app"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" /> 
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
     <title>React App</title>
+    <!-- including AD Lib AdSetup-->
+    <script type="text/javascript">
+      window.adSSetup = {
+        view: "d", // for desktop, use "m" for mobile
+        partners: true,
+        adPlacements: ["superbanner", "sky", "billboard", "mrec", "mrec_btf", "mrec_btf_2", "mrec_btf_3", "inpage"],
+        adSlotSizes: {
+          "billboard": [{
+            "minWidth": 799,
+            "sizes": [[800, 250]]
+          }, {
+            "minWidth": 969,
+            "sizes": [[970, 250], [800, 250]]
+          }],
+          "mrec": [{
+            "minWidth": 1,
+            "sizes": [[300, 250], [300, 600]]
+          }],
+          "mrec_btf": [{
+            "minWidth": 1,
+            "sizes": [[300, 250], [300, 600]]
+          }]
+        },
+        gaiaSetup: {
+          "startCount": 10,
+          "fitSizeToSlot": true,
+          "sizes": {
+            "m": [[300, 50], [320, 50], [300, 75], [320, 75], [300, 80], [320, 80], [300, 150], [320, 150]],
+            "d": [[970, 250], [800, 250], [300, 250]]
+         },         
+        "matchTagsBefore": [
+          "</h2>"
+        ],
+        "matchTagsAfter": [
+          "</div>",
+          "</p>"
+        ],
+        "ads": [
+          "teaser",
+          "regteaser",
+          "liveticker-ad"
+        ],
+        "resetBy": [
+          "sas_.*",
+          "ANZEIGE"
+        ],
+        "except": [
+          "<h3>Lesen Sie auch</h3>",
+          "video",
+          "<img",
+          "embed",
+          "iframe"
+        ],
+        "article": [
+          "main[role='main']",
+          ".hs-liveticker"
+        ],
+        "textWrapper": [
+          "article",
+          ".module-liveticker"
+        ],
+        "wrapperCSS": "margin: 0 0 20px 0;",
+        "markerCSS": ".gaiaWrapper:after { content: 'Anzeige'; font-size: .75rem; display: block; text-align: center; text-transform: uppercase; color: #999; line-height: 2rem; }",
+          "wrapperCSSmew": "margin: 0 0 15px 0;",
+          "markerCSSmew": ".gaiaWrapper:before { display: block; content: 'Anzeige'; letter-spacing: normal; font-family: ffmark,Helvetica Neue,Helvetica,Arial,sans-serif; font-style: normal; font-weight: 200; font-size: 12px; line-height: 16px; display: block; color: #787878; text-align: right; }",
+          // ... other properties ...
+        },
+
+        placeholder: {
+          disablePlaceholders: false,
+          default: {	
+            "border-color": "#EEEDE8",
+            "border": "5px dotted blue", // optional, replaces border-color
+            "background-color": "#F9F9F7",
+            "after": "{content: 'ADVERTISMENT'}", // optional, replace "ANZEIGE" by your own CSS
+            "before": "{...}}", // optional
+            "admarkPosition": "bottom right",
+            "color": "#BCBCBC",
+            "font-size": "12px",
+            "font-family": "Tahoma",
+            "clickUrl": "https://adtechnology.axelspringer.com" // optional
+        },
+        mrec: { 
+            "background-color": "#FCBFFF"
+        }
+          // ... other properties ...
+        },
+        colorBg: true,
+        bgClick: true,
+        hasVideoPlayer: true,
+        isArticle: true,
+        pageName: "demo_story",
+        target: "value1;value2;value3;key1=value1,value2;key2=value1,value2;",
+        iabTax: "IAB2,IAB2-1,1,32"
+      }
+    </script>
+    <!-- including AD Lib-->
+    <script type="text/javascript" src="https://www.asadcdn.com/adlib/pages/adtechnology.axelspringer.js"></script>
+
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>
