@@ -123,6 +123,36 @@ Before you can run or begin contributing to this project, you'll need to have th
 # Running the Project
 #
 To run the project, ensure that you have signed up for both an AWS account and a Sendgrid account. 
+Also ensure that you have set the following environmental variables in a .env  in your backend and frontend root folders respectively:
+
+Backend:
+- NODE_ENV
+- DB_USER
+- DB_HOST
+- DB_NAME
+- DB_PASSWORD
+- DB_PORT
+- DB_DIALECT
+
+
+- PORT
+- EMAIL_USER2
+
+- EMAIL_PASSWORD
+- JWT_SECRET
+- EMAIL_USER
+- SENDGRID_API_KEY
+
+- AWS_BUCKET_NAME
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- AWS_REGION
+
+frontend:
+- REACT_APP_BACKEND_URL=http://localhost:3002
+- PORT=3000
+
+- PRODUCTION_REACT_APP_BACKEND_URL=https://oudioo-production-9f97.up.railway.app
 
 ### Step 1: Clone the repository
 Open your terminal and navigate to a choice directory(e.g, desktop) `cd Desktop`.
